@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const LoginForm = ({ userType, onLoginSuccess }) => {
+const LoginForm = ( onLoginSuccess ) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -9,7 +9,7 @@ const LoginForm = ({ userType, onLoginSuccess }) => {
     event.preventDefault();
     // Simular un login exitoso
     if (email === 'test@example.com' && password === 'password') {
-      onLoginSuccess(userType);
+      onLoginSuccess();
     } else {
       setError('Invalid email or password');
     }

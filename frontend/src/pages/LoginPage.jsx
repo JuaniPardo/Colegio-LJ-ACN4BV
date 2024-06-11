@@ -1,9 +1,18 @@
 import LoginForm from '../components/LoginForm';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { userType } = useParams();
+
+  const handleStudentLogin = () => {
+    localStorage.setItem('userType', 'student');
+    navigate('/student-dashboard');
+  };
+
+  const handleTeacherLogin = () => {
+    localStorage.setItem('userType', 'teacher');
+    navigate('/teacher-dashboard');
+  };
 
   const handleLoginSuccess = (userType) => {
     // Guarda el tipo de usuario en el almacenamiento local
@@ -20,8 +29,10 @@ const LoginPage = () => {
   return (
     <div>
       <p>test@example.com / password</p>
-      <h1>Login {userType.charAt(0).toUpperCase() + userType.slice(1)}</h1>
-      <LoginForm userType={userType} onLoginSuccess={handleLoginSuccess} />
+      <h1>Login</h1>
+      <LoginForm onLoginSuccess={handleLoginSuccess}/>
+      <button onClick={handleStudentLogin}>Login Alumno</button>
+      <button onClick={handleTeacherLogin}>Login Profesor</button>
     </div>
   );
 };
