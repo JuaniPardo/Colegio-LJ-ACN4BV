@@ -1,3 +1,4 @@
+import { useContext, useEffect } from 'react';
 import LoginForm from '../components/LoginForm';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,6 +26,13 @@ const LoginPage = () => {
       navigate('/teacher-dashboard');
     }
   };
+
+  useEffect(() => {
+    const user = null;
+    if (user != null) {
+      navigate('/dashboard');
+    }
+  }, []);
 
   return (
     <div className="flex flex-col justify-center h-screen items-center gap-4 p-4">
