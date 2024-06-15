@@ -13,7 +13,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
+    <div className="flex flex-col h-screen justify-center items-center gap-4 p-4">
       <h1 className={'text-4xl font-bold text-center text-blue-500'}>Colegio LJ</h1>
       <div className="flex gap-4">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
