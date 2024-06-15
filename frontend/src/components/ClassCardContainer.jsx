@@ -6,6 +6,10 @@ export const ClassCardContainer = () => {
             <ClassCard />    
             <ClassCard />    
             <ClassCard />    
+            <ClassCard />    
+            <ClassCard />    
+            <ClassCard />    
+            <ClassCard />    
         </div>        
     </>
 } 
