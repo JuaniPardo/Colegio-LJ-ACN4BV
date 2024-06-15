@@ -1,10 +1,11 @@
+import { ClassCardContainer } from "../../components/ClassCardContainer";
+
 const StudentDashboardPage = () => {
   return (
     <div>
-      <h1>Student Dashboard</h1>
-      <p>Bienvenido al panel de control del estudiante.
-      </p>
-    </div>
+      <h1 className="text-3xl p-5 font-bold">Mis Clases</h1>
+        <ClassCardContainer />
+      </div>
   );
 };
 

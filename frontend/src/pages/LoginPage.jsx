@@ -27,11 +27,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
+    <div className="flex flex-col justify-center h-screen items-center gap-4 p-4">
       <p className="text-2xl font-semibold">
         Bienvenidos <span className="text-blue-500"> Alumnos</span> y <span className="text-blue-500">Profesores</span>
       </p>
-      <h1 className="text-6xl font-bold text-center text-blue-500 ">Login</h1>
       <LoginForm onLoginSuccess={handleLoginSuccess}/>
       <div className= "flex gap-4">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
