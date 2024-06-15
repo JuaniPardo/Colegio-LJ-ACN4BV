@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useAuth } from '../contexts/AuthProvider';
 
-const LoginForm = ( onLoginSuccess ) => {
+const LoginForm = () => {
+  const {login} = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -8,11 +10,7 @@ const LoginForm = ( onLoginSuccess ) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Simular un login exitoso
-    if (email === 'test@example.com' && password === 'password') {
-      onLoginSuccess();
-    } else {
-      setError('Invalid email or password');
-    }
+    login();
   };
 
   return (

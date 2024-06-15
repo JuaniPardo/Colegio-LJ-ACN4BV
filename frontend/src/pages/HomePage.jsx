@@ -1,7 +1,18 @@
 import {useNavigate} from "react-router-dom";
+import { useAuth } from "../contexts/AuthProvider";
+import { useEffect } from "react";
 
 const HomePage = () => {
   const navigate = useNavigate();
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if(user != null) {
+      navigate("/student-dashboard");
+    }
+  }, [user]);
+
 
   const handleLogin = () => {
     navigate('/login');

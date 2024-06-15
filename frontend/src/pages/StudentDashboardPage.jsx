@@ -1,4 +1,4 @@
-import { ClassCardContainer } from "../../components/ClassCardContainer";
+import { ClassCardContainer } from "../components/ClassCardContainer";
 
 const StudentDashboardPage = () => {
   return (

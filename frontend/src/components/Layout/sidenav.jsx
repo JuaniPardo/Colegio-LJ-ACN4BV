@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavLinks from "./nav-links.jsx";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthProvider.jsx";
 
 export default function SideNav() {
-  const [usuario, setUsuario] = useState({
-    nombre: "Lucas",
-    apellido: "Caraballo"
-  })
+
+  const { user, logout } = useAuth();
 
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
@@ -15,17 +14,15 @@ export default function SideNav() {
         href="/"
       >
         <div className="text-white text-2xl font-bold">
-          {`${usuario.nombre} ${usuario.apellido}`}
+          {(user != null) ? user.nombre + " " + user.apellido : "John Doe"}
         </div>
       </a>
-      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
+      <div className="flex flex-row justify-between md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
         <div className="hidden h-auto w-full rounded-md bg-gray-50 md:block"></div>
-        <form className="grow">
-          <Link to={ "/" } className="flex py-4 px-5 w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start">
-            <div className="">Cerrar Sesión</div>
-          </Link>
-        </form>
+        <button onClick={logout} className="flex py-4 px-5 w-full grow items-center justify-center rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start">
+          <div className="">Cerrar Sesión</div>
+        </button>
       </div>
     </div>
   );
