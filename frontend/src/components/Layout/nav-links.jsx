@@ -1,11 +1,13 @@
 'use client'
 
+import { Link } from "react-router-dom";
+
 
 // Map of links to display in the side navigation.
 const links = [
   {
     name: 'Inicio',
-    href: '/student-dashboard',
+    href: '/dashboard',
   },
   {
     name: 'Cursos',
@@ -22,15 +24,15 @@ export default function NavLinks() {
     <>
       {links.map((link) => {
         return (
-          <a
+          <Link
             key={link.name}
-            href={link.href}
+            to={link.href}
             className={
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3'
+              'flex py-4 px-5 mb-4 grow items-center justify-center gap-2 rounded-md bg-gray-50 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start'
             }
           >
-            <p className="">{link.name}</p>
-          </a>
+            {link.name}
+          </Link>
         );
       })}
     </>
