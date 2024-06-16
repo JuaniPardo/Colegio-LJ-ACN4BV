@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const links = [
   {
     name: 'Inicio',
-    href: '/student-dashboard',
+    href: '/dashboard',
   },
   {
     name: 'Cursos',
@@ -28,7 +28,7 @@ export default function NavLinks() {
             key={link.name}
             to={link.href}
             className={
-              'flex py-4 px-5 grow items-center justify-center gap-2 rounded-md bg-gray-50 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start'
+              'flex py-4 px-5 mb-4 grow items-center justify-center gap-2 rounded-md bg-gray-50 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start'
             }
           >
             {link.name}

@@ -1,6 +1,6 @@
 import { ClassCardContainer } from "../components/ClassCardContainer";
 
-const StudentDashboardPage = () => {
+export const DashboardPage = () => {
   return (
     <div>
       <h1 className="text-3xl p-5 font-bold">Mis Clases</h1>
@@ -8,5 +8,3 @@ const StudentDashboardPage = () => {
     </div>
   );
 };
-
-export default StudentDashboardPage;

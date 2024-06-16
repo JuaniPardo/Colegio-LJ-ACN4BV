@@ -5,15 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function Layout({ children }) {
 
-  const navigate = useNavigate();
-  const {user} = useAuth();
-
-  useEffect(() => {
-    if(user == null) {
-      navigate("/login");
-    }
-  }, [user]);
-
   return (
     <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
       <div className="w-full flex-none md:w-64">
