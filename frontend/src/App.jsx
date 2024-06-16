@@ -6,7 +6,7 @@ import Layout from "./components/Layout/DashboardLayout.jsx";
 import { MateriaPage } from './pages/MateriaPage.jsx';
 import { AuthProvider } from './contexts/AuthProvider.jsx';
 import { PrivateRoutes } from './private_routes/PrivateRoutes.jsx';
-
+ 
 function App() {
   return (
     <AuthProvider>

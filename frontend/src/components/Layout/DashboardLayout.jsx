@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 export default function Layout({ children }) {
 
   return (
-    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-      <div className="w-full flex-none md:w-64">
+    <div className="flex flex-col md:h-screen md:p-4  md:flex-row md:overflow-hidden">
+      <div className="w-full md:w-1/5">
         <SideNav />
       </div>
-      <div className="flex-grow me-3 md:my-4 p-6 rounded-md bg-gray-50 md:overflow-y-auto">
+      <div className="w-full p-6 rounded-md bg-gray-100 md:overflow-y-auto">
         {children}
       </div>
     </div>
