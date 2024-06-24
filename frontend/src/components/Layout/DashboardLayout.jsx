@@ -1,16 +1,12 @@
-import { useEffect } from "react";
 import SideNav from "./sidenav";
-import { useAuth } from "../../contexts/AuthProvider";
-import { useNavigate } from "react-router-dom";
-
-export default function Layout({ children }) {
+export const Layout = ({ children }) => {
 
   return (
-    <div className="flex flex-col md:h-screen md:p-4  md:flex-row md:overflow-hidden">
+    <div className="flex flex-col md:h-screen md:flex-row md:overflow-hidden dark:bg-slate-900 transition-all">
       <div className="w-full md:w-1/5">
         <SideNav />
       </div>
-      <div className="w-full p-6 rounded-md bg-gray-100 md:overflow-y-auto">
+      <div className="w-full p-6 rounded-md bg-gray-100 dark:bg-slate-800 md:overflow-y-auto transition-all">
         {children}
       </div>
     </div>

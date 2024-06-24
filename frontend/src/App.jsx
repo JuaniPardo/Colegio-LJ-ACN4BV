@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage.jsx';
-import Layout from "./components/Layout/DashboardLayout.jsx";
 import { MateriaPage } from './pages/MateriaPage.jsx';
 import { AuthProvider } from './contexts/AuthProvider.jsx';
-import { PrivateRoutes } from './middleware/PrivateRoutes.jsx';
+import { AuthRoutes } from './middleware/AuthRoutes.jsx';
+import { UsuariosPage } from './pages/UsuariosPage.jsx';
+import { AdminRoutes } from './middleware/AdminRoutes.jsx';
+import { LogOutRoute } from './middleware/LogOutRoute.jsx';
 
 function App() {
   return (
@@ -13,7 +15,11 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route element={<PrivateRoutes />}>
+          <Route path="/logout" element={<LogOutRoute />} />
+          <Route element={<AdminRoutes />}>
+            <Route path="/usuarios" element={<UsuariosPage />}/>
+          </Route>
+          <Route element={<AuthRoutes />}>
             <Route path="/dashboard" element={<DashboardPage />} allowedUserType="student" />
             <Route path="/materia/:idMateria" element={<MateriaPage />} />
           </Route>
