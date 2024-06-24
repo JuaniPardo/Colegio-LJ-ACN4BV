@@ -14,8 +14,8 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route element={<PrivateRoutes />}>
-            <Route path="/dashboard" element={<Layout><DashboardPage /></Layout>} allowedUserType="student" />
-            <Route path="/materia/:idMateria" element={<Layout><MateriaPage /></Layout>} />
+            <Route path="/dashboard" element={<DashboardPage />} allowedUserType="student" />
+            <Route path="/materia/:idMateria" element={<MateriaPage />} />
           </Route>
         </Routes>
       </Router>

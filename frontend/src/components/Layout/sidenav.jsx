@@ -1,18 +1,14 @@
-import { useEffect, useState } from "react";
 import NavLinks from "./nav-links.jsx";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthProvider.jsx";
 
 export default function SideNav() {
 
-  const [darkMode, setDarkMode] = useState(false);
-
   const toggleDarkMode = () => {
     const htmlElement = document.querySelector("html");
-    if(htmlElement.classNameList.contains("dark")) {
-      htmlElement.classNameList.remove("dark");
+    if(htmlElement.classList.contains("dark")) {
+      htmlElement.classList.remove("dark");
     } else {
-      htmlElement.classNameList.add("dark");
+      htmlElement.classList.add("dark");
     }
   }
 
