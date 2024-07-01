@@ -1,4 +1,4 @@
-import Layout from "../components/Layout/DashboardLayout"
+import {Layout} from "../components/Layout/DashboardLayout"
 
 export const MateriaPage = () => {
     return <Layout>
