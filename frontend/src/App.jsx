@@ -20,7 +20,7 @@ function App() {
             <Route path="/usuarios" element={<UsuariosPage />}/>
           </Route>
           <Route element={<AuthRoutes />}>
-            <Route path="/dashboard" element={<DashboardPage />} allowedUserType="student" />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/materia/:idMateria" element={<MateriaPage />} />
           </Route>
         </Routes>
