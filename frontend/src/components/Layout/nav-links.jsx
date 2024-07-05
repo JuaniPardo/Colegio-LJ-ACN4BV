@@ -1,6 +1,6 @@
 'use client'
 
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 
 // Map of links to display in the side navigation.
@@ -8,10 +8,6 @@ const links = [
   {
     name: 'Inicio',
     href: '/dashboard',
-  },
-  {
-    name: 'Cursos',
-    href: '/cursos',
   },
   {
     name: 'Notas',

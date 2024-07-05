@@ -7,6 +7,7 @@ import { AuthRoutes } from './middleware/AuthRoutes.jsx';
 import { UsuariosPage } from './pages/UsuariosPage.jsx';
 import { AdminRoutes } from './middleware/AdminRoutes.jsx';
 import { LogOutRoute } from './middleware/LogOutRoute.jsx';
+import { NotasPage } from "./pages/NotasPage.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route element={<AuthRoutes />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/materia/:idMateria" element={<MateriaPage />} />
+            <Route path="/notas" element={<NotasPage />} />
           </Route>
         </Routes>
       </Router>
