@@ -7,6 +7,8 @@ import { AuthRoutes } from './middleware/AuthRoutes.jsx';
 import { UsuariosPage } from './pages/UsuariosPage.jsx';
 import { AdminRoutes } from './middleware/AdminRoutes.jsx';
 import { LogOutRoute } from './middleware/LogOutRoute.jsx';
+import { EditUsuarioPage } from './pages/EditUsuarioPage.jsx';
+import { CrearUsuarioPage } from './pages/CrearUsuarioPage.jsx';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/logout" element={<LogOutRoute />} />
           <Route element={<AdminRoutes />}>
             <Route path="/usuarios" element={<UsuariosPage />}/>
+            <Route path="/usuario/:idUsuario" element={<EditUsuarioPage />}/>
+            <Route path="/crearUsuario" element={<CrearUsuarioPage />}/>
           </Route>
           <Route element={<AuthRoutes />}>
             <Route path="/dashboard" element={<DashboardPage />} />
