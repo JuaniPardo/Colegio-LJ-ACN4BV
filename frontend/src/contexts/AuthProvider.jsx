@@ -10,10 +10,11 @@ export const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
 
-    const login = () => {
+    const login = (userType) => {
         setUser({
             nombre: "Lucas",
-            apellido: "Caraballo"
+            apellido: "Caraballo",
+            type: userType
         });
     }
 

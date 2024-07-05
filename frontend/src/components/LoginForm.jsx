@@ -9,8 +9,8 @@ const LoginForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Simular un login exitoso
-    login();
+    // Simular un login exitoso de admin
+    login("admin");
   };
 
   return (
