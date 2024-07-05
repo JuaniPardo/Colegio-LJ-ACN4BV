@@ -56,7 +56,7 @@ export const UsuariosTable = () => {
                         </td>
                         }
                         <td className="px-6 py-4">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit ID {usuario.id}</a>
+                            <Link to={"/usuario/" + usuario.id} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
                         </td>
                     </tr>
             )
