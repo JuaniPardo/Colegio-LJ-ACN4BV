@@ -3,7 +3,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthProvider";
 
-
 // Map of links to display in the side navigation.
 const links = [
   {
