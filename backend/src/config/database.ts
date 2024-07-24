@@ -1,7 +1,7 @@
 import mysql, { Pool } from 'mysql2'
 import 'dotenv/config'
 
-export const dbPoolConnection: Pool = mysql.createPool({
+export const pool: Pool = mysql.createPool({
     host: process.env.DB_MYSQL_HOST ?? 'localhost',
     port: Number(process.env.DB_MYSQL_PORT) ?? 3307,
     user: process.env.DB_MYSQL_USER ?? 'root',
