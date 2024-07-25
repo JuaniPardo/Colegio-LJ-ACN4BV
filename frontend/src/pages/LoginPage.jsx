@@ -5,13 +5,13 @@ import { useAuth } from '../contexts/AuthProvider';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { accessToken } = useAuth();
 
   useEffect(() => {
-    if(user != null) {
+    if(accessToken != null) {
       navigate("/dashboard");
     }
-  }, [user]);
+  }, [accessToken]);
 
   return (
     <div className="flex flex-col justify-center h-screen items-center gap-4 p-4">

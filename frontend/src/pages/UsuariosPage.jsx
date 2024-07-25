@@ -10,7 +10,7 @@ export const UsuariosPage = () => {
   };
 
   return (
-    <Layout>
+    <>
       <h1 className="text-3xl py-5 mb-4 font-bold text-black dark:text-white transition-all">
         Usuarios
       </h1>
@@ -67,6 +67,6 @@ export const UsuariosPage = () => {
       </form>
 
       <UsuariosTable />
-    </Layout>
+    </>
   );
 };

@@ -17,7 +17,7 @@ export default function SideNav() {
     }
   }
 
-  const { user } = useAuth();
+  const { accessToken } = useAuth();
 
   return (
     <div className="flex flex-col">
@@ -26,7 +26,7 @@ export default function SideNav() {
         href="/"
       >
         <div className="text-white text-1xl md:text-2xl font-bold">
-          {(user != null) ? user.nombre + " " + user.apellido : "John Doe"}
+          "John Doe"
         </div>
       </a>
       <div className="flex justify-between flex-col p-3">

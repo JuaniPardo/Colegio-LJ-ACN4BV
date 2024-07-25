@@ -16,11 +16,11 @@ const links = [
   },*/
   {
     name: 'Notas',
-    href: '/notas',
+    href: '/dashboard/notas',
   },
   {
     name: 'Usuarios',
-    href: '/usuarios',
+    href: '/dashboard/usuarios',
     user_type: 'admin'
   },
   {
@@ -31,7 +31,7 @@ const links = [
 
 export default function NavLinks() {
 
-  const {user} = useAuth();
+  const {accessToken} = useAuth();
 
   const [ navLinks, setNavLinks ] = useState([]);
 
@@ -41,9 +41,8 @@ export default function NavLinks() {
 
   return (
     <>
-      {navLinks.map((link, k) => {
-        return (
-          (link.user_type == null || link.user_type == user.type) ?
+      {navLinks.map((link, k) => (
+
             <Link
             key={k} 
             to={link.href}
@@ -52,11 +51,9 @@ export default function NavLinks() {
             }
             >
               {link.name}
-            </Link>
-          :
-            ""     
-        );
-      })}
+            </Link>  
+        )
+      )}  
     </>
   );
 }

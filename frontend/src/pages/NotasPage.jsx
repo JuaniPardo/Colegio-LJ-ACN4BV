@@ -9,9 +9,9 @@ const materias = [
 
 export const NotasPage = () => {
   return (
-    <Layout>
+    <>
       <h1 className="text-3xl py-5 mb-4 font-bold text-black dark:text-white transition-all">Notas</h1>
       <NoteCardsContainer materias={materias} />
-    </Layout>
+    </>
   );
 };

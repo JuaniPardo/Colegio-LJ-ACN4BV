@@ -1,12 +1,23 @@
+import { Route, Router, Routes } from "react-router-dom";
 import { ClassCardContainer } from "../components/ClassCardContainer";
-import {Layout} from "../components/Layout/DashboardLayout";
+import { Layout } from "../components/Layout/DashboardLayout";
+import { UsuariosPage } from "./UsuariosPage";
+import { EditUsuarioPage } from "./EditUsuarioPage";
+import { CrearUsuarioPage } from "./CrearUsuarioPage";
+import { MateriaPage } from "./MateriaPage";
+import { NotasPage } from "./NotasPage";
 
 export const DashboardPage = () => {
   return (
     <Layout>
-      {/* TODO: REFACTOR RECIBIR H1 COMO PROP EN EL LAYOUT */}
-      <h1 className="text-3xl py-5 mb-4 font-bold text-black dark:text-white transition-all">Mis Clases</h1>
-      <ClassCardContainer />
+      <Routes>
+        <Route path="/" element={<ClassCardContainer />} />
+        <Route path="/usuarios" element={<UsuariosPage />} />
+        <Route path="/usuarios/:idUsuario" element={<EditUsuarioPage />} />
+        <Route path="/usuarios/crear" element={<CrearUsuarioPage />} />
+        <Route path="/materia/:idMateria" element={<MateriaPage />} />
+        <Route path="/notas" element={<NotasPage />} />
+      </Routes>
     </Layout>
   );
 };

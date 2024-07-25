@@ -59,6 +59,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     const query = `CALL sp_insertar_usuario(?, ?, ?, ?, ?)`
     const hashedPassword = await bcrypt.hash(password, 10)
     pool.execute(query, [username, hashedPassword, first_name, last_name, email], (err, results) => {
+        // TODO: CUSTOM RESPONSE BASED ON ERROR CODE 
         if (err) return res.status(500).json({ message: "Error occured during query.", error_code: err.code })
         return res.status(201).json({
             message: "User registered successfully",
