@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+  const navigate = useNavigate()
   const {login} = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -10,8 +12,8 @@ const LoginForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Simular un login exitoso de admin
-    const loginResult = await login(username, password);
-    console.log(loginResult)
+    await login(username, password);
+    navigate("/dashboard");
   };
 
   return (

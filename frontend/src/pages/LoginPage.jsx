@@ -9,7 +9,7 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if(accessToken != null) {
-      navigate("/dashboard");
+      //navigate("/dashboard");
     }
   }, [accessToken]);
 

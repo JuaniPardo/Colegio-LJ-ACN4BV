@@ -17,6 +17,7 @@ export const AUTH_RESPONSE_MESSAGE = {
 
 export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState();
+  const [user, SetUser] = useState({})
 
   const login = async (username, password) => {
     let responseMessage = null;
@@ -49,7 +50,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, login, logout }}>
+    <AuthContext.Provider value={{ accessToken, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
