@@ -14,7 +14,7 @@ export const ClassCard = () => {
     });
 
     return <>
-        <Link to={`/materia/` + materia.id_materia} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 mb-4 p-2 hover:cursor-pointer">
+        <Link to={`/dashboard/materias/` + materia.id_materia} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 mb-4 p-2 hover:cursor-pointer">
             <div className=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 hover:-translate-y-1 hover:shadow-md transition-all">
                 <div className="w-full h-28">
                     <img className="rounded-t-lg w-full h-full object-cover" src="https://picsum.photos/200" alt="" />

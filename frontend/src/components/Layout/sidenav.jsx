@@ -1,10 +1,11 @@
 import NavLinks from "./nav-links.jsx";
 import { useAuth } from "../../contexts/AuthProvider.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SideNav() {
 
   const [ modoOscuro, setModoOscuro ] = useState(false);
+  const [ nombre, setNombre ] = useState("Foo")
 
   const toggleDarkMode = () => {
     const htmlElement = document.querySelector("html");
@@ -17,7 +18,14 @@ export default function SideNav() {
     }
   }
 
-  const { accessToken } = useAuth();
+  const { userBasic } = useAuth();
+  
+  useEffect(() => {
+    if(userBasic) {
+      setNombre(userBasic.nombre)
+    }
+  },[userBasic])
+
 
   return (
     <div className="flex flex-col">
@@ -26,7 +34,7 @@ export default function SideNav() {
         href="/"
       >
         <div className="text-white text-1xl md:text-2xl font-bold">
-          "John Doe"
+          ¡Hola, {nombre}!
         </div>
       </a>
       <div className="flex justify-between flex-col p-3">

@@ -24,7 +24,6 @@ export const MateriaPage = () => {
   const promedio = materia.notas.reduce((a, b) => a + b, 0) / materia.notas.length;
 
   return (
-    <Layout>
       <div className="p-10">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
           <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">{materia.nombre}</h1>
@@ -46,6 +45,5 @@ export const MateriaPage = () => {
           </div>
         </div>
       </div>
-    </Layout>
   );
 };

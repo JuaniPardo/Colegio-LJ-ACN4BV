@@ -1,4 +1,3 @@
-import { Layout } from '../components/Layout/DashboardLayout';
 import NoteCardsContainer from '../components/NoteCardsContainer';
 
 const materias = [

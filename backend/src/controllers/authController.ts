@@ -22,7 +22,12 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         if (!passwordMatch) return res.status(401).json({ message: "User or password is wrong, try again." })
         // 5. Generate JWT token and payload
         const payload = {
-            "id": userFound.id,
+            "id": userFound.id_usuario,
+            "username": userFound.username,
+            "nombre": userFound.nombre,
+            "apellido": userFound.apellido,
+            "email": userFound.email,
+            "is_active": userFound.is_active
         };
         const accessTokenSecret = process.env.JWT_ACCESS_TOKEN_SECRET
         if (!accessTokenSecret) return res.status(500).json({ message: "missing JWT_ACCESS_TOKEN_SECRET in .env" })

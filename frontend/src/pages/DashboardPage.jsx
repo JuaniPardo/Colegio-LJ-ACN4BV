@@ -15,7 +15,7 @@ export const DashboardPage = () => {
         <Route path="/usuarios" element={<UsuariosPage />} />
         <Route path="/usuarios/:idUsuario" element={<EditUsuarioPage />} />
         <Route path="/usuarios/crear" element={<CrearUsuarioPage />} />
-        <Route path="/materia/:idMateria" element={<MateriaPage />} />
+        <Route path="/materias/:idMateria" element={<MateriaPage />} />
         <Route path="/notas" element={<NotasPage />} />
       </Routes>
     </Layout>
