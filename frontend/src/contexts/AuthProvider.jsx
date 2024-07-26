@@ -19,6 +19,10 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState();
   const [user, SetUser] = useState({})
 
+  const syncUserWithToken = async () => {
+
+  }
+
   const login = async (username, password) => {
     let responseMessage = null;
     const loginData = await fetch("http://localhost:3000/api/login", {
