@@ -1,9 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
+import { useCookies } from 'react-cookie'
 import { jwtDecode } from "jwt-decode";
-
-const cookies = new Cookies(null, { path: "/" });
 
 const AuthContext = createContext();
 
@@ -20,9 +17,15 @@ export const AUTH_STATUS = {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [accessToken, setAccessToken] = useState();
-  // CONTAINS USER BASIC INFO
+  const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
+
   const [userBasic, setUserBasic] = useState({});
+
+  useEffect(() => {
+    if(cookies.access_token){
+      getUserBasicFromToken(cookies.access_token)
+    }
+  }, [cookies])
 
   const getUserBasicFromToken = async (access_token) => {
     try {
@@ -48,7 +51,7 @@ export const AuthProvider = ({ children }) => {
       if (!loginDataJSON.access_token) {
         return [false, AUTH_STATUS.UNAUTHORIZED];
       }
-      setAccessToken(loginDataJSON.access_token);
+      setCookie('access_token', loginDataJSON.access_token)
       return [true, AUTH_STATUS.AUTHENTICATED];
     } catch (err) {
       return [false, AUTH_STATUS.INTERNAL_ERROR];
@@ -56,19 +59,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setAccessToken(null);
-    setUserBasic(null);
+    removeCookie('access_token')
   };
 
-  useEffect(() => {
-    if (accessToken) {
-      cookies.set("access_token", accessToken);
-      getUserBasicFromToken(accessToken);
-    }
-  }, [accessToken]);
-
   return (
-    <AuthContext.Provider value={{ accessToken, userBasic, login, logout }}>
+    <AuthContext.Provider value={{ userBasic, cookies, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

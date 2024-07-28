@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../contexts/AuthProvider"
+import { useAuth } from "../contexts/AuthProvider";
 
 export const AuthRoutes = () => {
-    const { accessToken } = useAuth();
+    const { cookies } = useAuth()
     return (
-        accessToken != null ? <Outlet /> : <Navigate to="/login" />
+        cookies.access_token != null ? <Outlet /> : <Navigate to="/login" />
     )
 }

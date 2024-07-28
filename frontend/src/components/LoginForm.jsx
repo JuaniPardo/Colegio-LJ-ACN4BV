@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { AUTH_STATUS, useAuth } from '../contexts/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' 
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons' 
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+  const { login } = useAuth()
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const navigate = useNavigate()
-  const {login} = useAuth();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,12 +17,14 @@ const LoginForm = () => {
     const [loginResult, loginMessage] = await login(username, password);
     console.log(loginResult, loginMessage)
     if(loginResult) {
-      navigate("/dashboard")
+      console.log("logged in")
+      navigate('/dashboard')
       return
     } else {
       setError(loginMessage)
     }
   };
+
 
   return (
     <form className= "flex flex-col gap-4 p-4 w-full md:w-1/5" onSubmit={handleSubmit}>
