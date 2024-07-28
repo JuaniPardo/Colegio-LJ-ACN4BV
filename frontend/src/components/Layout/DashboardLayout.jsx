@@ -19,7 +19,7 @@ export const Layout = () => {
             <Route path="/usuarios" element={<UsuariosPage />} />
             <Route path="/usuarios/:idUsuario" element={<EditUsuarioPage />} />
             <Route path="/usuarios/crear" element={<CrearUsuarioPage />} />
-            <Route path="/materias/:idMateria" element={<MateriaPage />} />
+            <Route path="/materias/:idMateria/*" element={<MateriaPage />} />
             <Route path="/notas" element={<NotasPage />} />
           </Routes>
         </div>
