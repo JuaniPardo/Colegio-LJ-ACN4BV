@@ -17,12 +17,13 @@ export const AUTH_STATUS = {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
-
+  const [cookies,setCookie, removeCookie] = useCookies(['access_token']);
+  const [accessToken, setAccessToken] = useState("");
   const [userBasic, setUserBasic] = useState({});
 
   useEffect(() => {
     if(cookies.access_token){
+      setAccessToken(cookies.access_token)
       getUserBasicFromToken(cookies.access_token)
     }
   }, [cookies])
@@ -63,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userBasic, cookies, login, logout }}>
+    <AuthContext.Provider value={{ userBasic, accessToken, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -15,9 +15,7 @@ const LoginForm = () => {
     event.preventDefault();
     // Simular un login exitoso de admin
     const [loginResult, loginMessage] = await login(username, password);
-    console.log(loginResult, loginMessage)
     if(loginResult) {
-      console.log("logged in")
       navigate('/dashboard')
       return
     } else {
