@@ -10,8 +10,8 @@ const app = express();
 // EXPRESS APP USAGES 
 app.use(cors())
 app.use(express.json())
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // EXPRESS APP USE ROUTES
 app.use('/', router)

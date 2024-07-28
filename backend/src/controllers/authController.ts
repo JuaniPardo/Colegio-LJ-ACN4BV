@@ -5,17 +5,16 @@ import { RegisterCredentials, UserRepository } from "../repositories/UserReposit
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     // 1. Get username and password request parameters
-    console.log(req.body)
     const { username, password } = req.body;
     // 2. Validate username and password exists
     if (!username) return res.status(500).json({ message: 'username is required' })
     if (!password) return res.status(500).json({ message: 'password is required' })
     // 3. Login with user credentials in db
     try {
-      const userId = await UserRepository.login({username, password})
+      const user = await UserRepository.login({username, password})
       const accessTokenSecret = process.env.JWT_ACCESS_TOKEN_SECRET
       if (!accessTokenSecret) return res.status(500).json({ message: "missing JWT_ACCESS_TOKEN_SECRET in .env" })
-      const accessToken = jwt.sign(userId, accessTokenSecret, { expiresIn: '15m' });
+      const accessToken = jwt.sign(user, accessTokenSecret, { expiresIn: '15m' });
       // 6. Return 200 with access token
       return res.status(200).json({ message: "Login successfully.", access_token: accessToken })
 
