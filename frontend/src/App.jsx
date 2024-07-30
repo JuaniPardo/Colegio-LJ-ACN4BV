@@ -1,9 +1,5 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { Toaster } from "sonner";
 import { LoginPage } from "./pages/LoginPage";
 import { AuthProvider } from "./contexts/AuthProvider.jsx";
 import { AuthRoutes } from "./middleware/AuthRoutes.jsx";
@@ -14,6 +10,7 @@ function App() {
   return (
     <CookiesProvider defaultSetOptions={{ path: "/" }}>
       <AuthProvider>
+        <Toaster position="top-right" />
         <Router>
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />

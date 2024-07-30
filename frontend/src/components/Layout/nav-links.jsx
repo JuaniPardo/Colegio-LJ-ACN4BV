@@ -25,8 +25,10 @@ export default function NavLinks() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate("/login");
+    const logoutResult = logout();
+    logoutResult.then(result => {
+      if(result) navigate('/login') 
+    })
   };
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from 'react-cookie'
-import { jwtDecode } from "jwt-decode";
-
+import { toast } from 'sonner'
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -16,22 +15,27 @@ export const AUTH_STATUS = {
     "Ha ocurrido un error interno, intente de nuevo. En caso de persistir comuniquese con un administrador",
 };
 
+const LOGOUT_STATUS = {
+  SUCCESS: "Sesión cerrada exitosamente",
+  FAILED: "Algo ha salido mal, vuelve a intentarlo",
+  INTERNAL_ERROR: "Ha ocurrido un error interno, intente de nuevo. En caso de persistir comuniquese con un administrador"
+}
+
 export const AuthProvider = ({ children }) => {
   const [cookies,setCookie, removeCookie] = useCookies(['access_token']);
-  const [accessToken, setAccessToken] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userBasic, setUserBasic] = useState({});
 
   useEffect(() => {
     if(cookies.access_token){
-      setAccessToken(cookies.access_token)
       getUserBasicFromToken(cookies.access_token)
     }
   }, [cookies])
 
   const getUserBasicFromToken = async (access_token) => {
     try {
-      const decodedPayload = jwtDecode(access_token);
-      setUserBasic(decodedPayload);
+      //const decodedPayload = jwtDecode(access_token);
+      // setUserBasic(decodedPayload);
     } catch (err) {
       console.log("Error Parsing Token, verify token's authenticity");
     }
@@ -50,22 +54,44 @@ export const AuthProvider = ({ children }) => {
       });
       const loginDataJSON = await loginData.json();
       // CHECK RESPONSE CONTAINS ACCESS TOKEN
-      if (!loginDataJSON.access_token) {
+      if(loginDataJSON.success) {
+        setIsAuthenticated(true)
+        toast.success(AUTH_STATUS.AUTHENTICATED)
+        return [true, AUTH_STATUS.AUTHENTICATED];
+      } else {
         return [false, AUTH_STATUS.UNAUTHORIZED];
       }
-      setCookie('access_token', loginDataJSON.access_token)
-      return [true, AUTH_STATUS.AUTHENTICATED];
+
     } catch (err) {
       return [false, AUTH_STATUS.INTERNAL_ERROR];
     }
   };
 
-  const logout = () => {
-    removeCookie('access_token')
+  const logout = async() => {
+    const logoutData = await fetch("http://localhost:3000/api/logout", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    });
+    const logoutDataJSON = await logoutData.json();
+    console.log(logoutDataJSON.success);
+    if(logoutDataJSON.success) {
+      setIsAuthenticated(false)
+      toast.success(LOGOUT_STATUS.SUCCESS)
+      return true
+    } else if (logoutDataJSON.message) {
+      toast.error(LOGOUT_STATUS.FAILED)
+      return false
+    }
+    toast.error(LOGOUT_STATUS.INTERNAL_ERROR)
+    return false
   };
 
   return (
-    <AuthContext.Provider value={{ userBasic, accessToken, login, logout }}>
+    <AuthContext.Provider value={{ userBasic, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

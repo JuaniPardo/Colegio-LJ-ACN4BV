@@ -8,9 +8,9 @@ const { Schema } = new DBLocal({ path: "./db" });
 export const USER_TYPES_MAP = {
   STUDENT: "student",
   PROFESOR: "profesor",
-  ADMINISTRATOR: "administrator"
-}
-export const USER_TYPES = Object.values(USER_TYPES_MAP)
+  ADMINISTRATOR: "administrator",
+};
+export const USER_TYPES = Object.values(USER_TYPES_MAP);
 
 const User = Schema("User", {
   _id: { type: String, required: true },
@@ -19,18 +19,18 @@ const User = Schema("User", {
   nombre: { type: String, required: true },
   apellido: { type: String, required: true },
   email: { type: String, required: true },
-  user_type: {type: String, required: true},
+  user_type: { type: String, required: true },
   is_active: { type: Boolean, required: true, default: true },
 });
 
 export type UserPayload = {
-  _id: string,
-  username: string,
-  nombre: string,
-  apellido: string,
-  user_type: string,
-  is_active: string,
-}
+  _id: string;
+  username: string;
+  nombre: string;
+  apellido: string;
+  user_type: string;
+  is_active: string;
+};
 
 export type LoginCredentials = {
   username: string;
@@ -38,26 +38,18 @@ export type LoginCredentials = {
 };
 
 export type RegisterCredentials = {
-  username: string,
-  password: string,
-  user_type: string,
-  confirmPassword: string,
-  nombre: string,
-  apellido: string,
-  email: string,
-  is_active: boolean
+  username: string;
+  password: string;
+  user_type: string;
+  confirmPassword: string;
+  nombre: string;
+  apellido: string;
+  email: string;
+  is_active: boolean;
 };
 
 export class UserRepository {
-  static async create({
-    username,
-    password,
-    confirmPassword,
-    nombre,
-    apellido,
-    email,
-    user_type,
-  }: RegisterCredentials) {
+  static async create({ username, password, confirmPassword, nombre, apellido, email, user_type }: RegisterCredentials) {
     // 1. Validations
     Validation.username(username);
     Validation.password(password);
@@ -68,8 +60,11 @@ export class UserRepository {
     const user = User.findOne((obj) => {
       return obj.username === username || obj.email === email;
     });
-    if (user)
-      throw new Error("User with that email or username already exists");
+    if (user && user.email === email) {
+      throw new UserEmailNotAvailableError("an user with that email already exists");
+    } else if(user && user.username === username) {
+      throw new UsernameNotAvailableError("an user with that username already exists");
+    }
 
     const id = crypto.randomUUID();
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
@@ -103,9 +98,9 @@ export class UserRepository {
   }
 
   static getUserTypes() {
-    return USER_TYPES
+    return USER_TYPES;
   }
-  }
+}
 
 class Validation {
   static username(username: string) {
@@ -139,7 +134,6 @@ class Validation {
   }
 
   static usertype(user_type: string) {
-  
     if (typeof user_type !== "string") {
       throw new Error("user_type must be a string");
     }
@@ -151,7 +145,21 @@ class Validation {
 
 export class UserTypeError extends Error {
   constructor(message) {
-    super()
-    this.message = message
+    super();
+    this.message = message;
+  }
+}
+
+export class UserEmailNotAvailableError extends Error {
+  constructor(message) {
+    super();
+    this.message = message;
+  }
+}
+
+export class UsernameNotAvailableError extends Error {
+  constructor(message) {
+    super();
+    this.message = message;
   }
 }
