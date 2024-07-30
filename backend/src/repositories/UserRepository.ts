@@ -5,6 +5,13 @@ import { SALT_ROUNDS } from "../config/config";
 import bcrypt from "bcrypt";
 const { Schema } = new DBLocal({ path: "./db" });
 
+export const USER_TYPES_MAP = {
+  STUDENT: "student",
+  PROFESOR: "profesor",
+  ADMINISTRATOR: "administrator"
+}
+export const USER_TYPES = Object.values(USER_TYPES_MAP)
+
 const User = Schema("User", {
   _id: { type: String, required: true },
   username: { type: String, required: true },
@@ -12,8 +19,18 @@ const User = Schema("User", {
   nombre: { type: String, required: true },
   apellido: { type: String, required: true },
   email: { type: String, required: true },
+  user_type: {type: String, required: true},
   is_active: { type: Boolean, required: true, default: true },
 });
+
+export type UserPayload = {
+  _id: string,
+  username: string,
+  nombre: string,
+  apellido: string,
+  user_type: string,
+  is_active: string,
+}
 
 export type LoginCredentials = {
   username: string;
@@ -21,13 +38,14 @@ export type LoginCredentials = {
 };
 
 export type RegisterCredentials = {
-  username: string;
-  password: string;
-  confirmPassword: string;
-  nombre: string;
-  apellido: string;
-  email: string;
-  is_active: boolean;
+  username: string,
+  password: string,
+  user_type: string,
+  confirmPassword: string,
+  nombre: string,
+  apellido: string,
+  email: string,
+  is_active: boolean
 };
 
 export class UserRepository {
@@ -38,12 +56,14 @@ export class UserRepository {
     nombre,
     apellido,
     email,
+    user_type,
   }: RegisterCredentials) {
     // 1. Validations
     Validation.username(username);
     Validation.password(password);
     Validation.passwordMatch(password, confirmPassword);
     Validation.email(email);
+    Validation.usertype(user_type);
     // 2. Check user doesn't exists
     const user = User.findOne((obj) => {
       return obj.username === username || obj.email === email;
@@ -61,6 +81,7 @@ export class UserRepository {
       nombre,
       apellido,
       email,
+      user_type,
       is_active: true,
     }).save();
 
@@ -77,10 +98,14 @@ export class UserRepository {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) throw new Error("password is not valid");
 
-    const { password: _, ...publicUser } = user;
+    const { password: _, email: __, ...publicUser } = user;
     return publicUser;
   }
-}
+
+  static getUserTypes() {
+    return USER_TYPES
+  }
+  }
 
 class Validation {
   static username(username: string) {
@@ -111,5 +136,22 @@ class Validation {
     if (!email || email.indexOf("@") == -1) {
       throw new Error("email is not valid or required");
     }
+  }
+
+  static usertype(user_type: string) {
+  
+    if (typeof user_type !== "string") {
+      throw new Error("user_type must be a string");
+    }
+    if (!USER_TYPES.includes(user_type)) {
+      throw new UserTypeError(`${user_type} is not a valid type of user`);
+    }
+  }
+}
+
+export class UserTypeError extends Error {
+  constructor(message) {
+    super()
+    this.message = message
   }
 }
