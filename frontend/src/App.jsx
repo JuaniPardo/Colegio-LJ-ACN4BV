@@ -10,7 +10,7 @@ function App() {
   return (
     <CookiesProvider defaultSetOptions={{ path: "/" }}>
       <AuthProvider>
-        <Toaster position="top-right" />
+        <Toaster position="top-right" richColors />
         <Router>
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
