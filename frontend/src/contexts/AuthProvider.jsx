@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }) => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
       const loginDataJSON = await loginData.json();
