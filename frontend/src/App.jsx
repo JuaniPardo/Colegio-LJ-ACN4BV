@@ -6,6 +6,7 @@ import { AuthRoutes } from "./middleware/AuthRoutes.jsx";
 import { Layout } from "./components/Layout/DashboardLayout.jsx";
 import { useState } from "react";
 import { LoadingAppSpinner } from "./components/AppComponents/LoadingAppSpinner.jsx";
+import { Page404 } from "./pages/404page.jsx";
 
 const APP_STATUS = {
   LOADING: "Cargando aplicacion...",
@@ -34,6 +35,7 @@ function App() {
               <Route element={<AuthRoutes />}>
                 <Route path="/dashboard/*" element={<Layout />} />
               </Route>
+              <Route path="/*" element={<Page404 />} />
             </Routes>
           </Router>
         </>

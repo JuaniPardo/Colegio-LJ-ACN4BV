@@ -6,6 +6,7 @@ import { EditUsuarioPage } from "../../pages/EditUsuarioPage";
 import { CrearUsuarioPage } from "../../pages/CrearUsuarioPage";
 import { MateriaPage } from "../../pages/MateriaPage";
 import { NotasPage } from "../../pages/NotasPage";
+import { Page404 } from "../../pages/404page";
 export const Layout = () => {
   return (
     <>
@@ -21,6 +22,7 @@ export const Layout = () => {
             <Route path="/usuarios/crear" element={<CrearUsuarioPage />} />
             <Route path="/materias/:idMateria/*" element={<MateriaPage />} />
             <Route path="/notas" element={<NotasPage />} />
+            <Route path="/*" element={<Page404/>} />
           </Routes>
         </div>
       </div>
