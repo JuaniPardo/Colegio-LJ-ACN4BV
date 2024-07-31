@@ -3,25 +3,42 @@ import { Toaster } from "sonner";
 import { LoginPage } from "./pages/LoginPage";
 import { AuthProvider } from "./contexts/AuthProvider.jsx";
 import { AuthRoutes } from "./middleware/AuthRoutes.jsx";
-import { CookiesProvider } from "react-cookie";
 import { Layout } from "./components/Layout/DashboardLayout.jsx";
+import { useState } from "react";
+import { LoadingAppSpinner } from "./components/AppComponents/LoadingAppSpinner.jsx";
+
+const APP_STATUS = {
+  LOADING: "Cargando aplicacion...",
+  USER_LOADED: "Usuario cargado",
+};
 
 function App() {
+  const [appStatus, setAppStatus] = useState(APP_STATUS.LOADING);
+
+  const loadUser = () => {
+    setAppStatus(APP_STATUS.USER_LOADED);
+  };
+
   return (
-    <CookiesProvider defaultSetOptions={{ path: "/" }}>
-      <AuthProvider>
-        <Toaster position="top-right" richColors />
-        <Router>
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route element={<AuthRoutes />}>
-              <Route path="/dashboard/*" element={<Layout />} />
-            </Route>
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </CookiesProvider>
+    <AuthProvider loadUser={loadUser}>
+      {appStatus === APP_STATUS.LOADING && (
+        <LoadingAppSpinner />
+      )}
+      {appStatus === APP_STATUS.USER_LOADED && (
+        <>
+          <Toaster position="top-right" richColors />
+          <Router>
+            <Routes>
+              <Route path="/" element={<Navigate to="/login" />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route element={<AuthRoutes />}>
+                <Route path="/dashboard/*" element={<Layout />} />
+              </Route>
+            </Routes>
+          </Router>
+        </>
+      )}
+    </AuthProvider>
   );
 }
 

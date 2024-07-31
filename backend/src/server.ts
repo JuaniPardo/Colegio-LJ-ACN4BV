@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import router from './routes/routes';
 import cookieParser from 'cookie-parser'
-import { requireAuth } from './middleware/authMiddleware';
+import { getAuth } from './middleware/authMiddleware';
 
 const API_PORT = process.env.PORT ?? 3000;
 const app = express();
@@ -15,7 +15,7 @@ app.use(cors({
   credentials: true,
   exposedHeaders: ["set-cookie"]
 }))
-app.use(requireAuth)
+app.use(getAuth)
 app.use(express.json())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

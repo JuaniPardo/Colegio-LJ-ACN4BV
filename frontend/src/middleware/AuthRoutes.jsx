@@ -3,7 +3,10 @@ import { useAuth } from "../contexts/AuthProvider";
 
 export const AuthRoutes = () => {
     const { isAuthenticated } = useAuth()
-    return (
-      isAuthenticated ? <Outlet /> : <Navigate to="/login" />
-    )
+    if (!isAuthenticated) {
+      return  <Navigate to="/login" />
+    }
+
+    return <Outlet />
+
 }

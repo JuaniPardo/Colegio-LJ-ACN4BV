@@ -23,7 +23,6 @@ const LoginForm = () => {
     }
   };
 
-
   return (
     <form className= "flex flex-col gap-4 p-4 w-full md:w-1/5" onSubmit={handleSubmit}>
       <div>

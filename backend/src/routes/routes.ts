@@ -1,5 +1,5 @@
 import express from 'express';
-import { login, create, logout, getUserTypes } from '../controllers/authController';
+import { login, create, logout, getUserTypes, refresh } from '../controllers/authController';
 
 const router = express.Router();
 
@@ -8,4 +8,5 @@ router.post('/api/login', login)
 router.post('/api/create', create)
 router.post('/api/logout', logout)
 router.post('/api/user-types', getUserTypes)
+router.post('/api/token/refresh', refresh)
 export default router
