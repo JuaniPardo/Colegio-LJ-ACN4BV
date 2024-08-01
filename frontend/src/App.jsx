@@ -27,7 +27,7 @@ function App() {
       )}
       {appStatus === APP_STATUS.USER_LOADED && (
         <>
-          <Toaster position="top-right" richColors />
+          <Toaster position="top-center" richColors />
           <Router>
             <Routes>
               <Route path="/" element={<Navigate to="/login" />} />
