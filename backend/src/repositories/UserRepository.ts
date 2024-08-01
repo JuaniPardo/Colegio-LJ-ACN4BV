@@ -25,11 +25,7 @@ const User = Schema("User", {
 
 export type UserPayload = {
   _id: string;
-  username: string;
-  nombre: string;
-  apellido: string;
   user_type: string;
-  is_active: string;
 };
 
 export type LoginCredentials = {
@@ -93,8 +89,8 @@ export class UserRepository {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) throw new Error("password is not valid");
 
-    const { password: _, email: __, ...publicUser } = user;
-    return publicUser;
+    const { _id, user_type } = user;
+    return { _id, user_type };
   }
 
   static getUserTypes() {
