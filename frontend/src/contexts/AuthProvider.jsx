@@ -22,18 +22,41 @@ const LOGOUT_STATUS = {
 
 export const AuthProvider = ({ children, loadUser }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  // const [userBasic, setUserBasic] = useState({});
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
+    const refreshToken = async () => {
+      try {
+        const refreshData = await fetch("http://localhost:3000/api/token/refresh", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          credentials: "include"
+        });
+        const refreshDataJSON = await refreshData.json();
+  
+        // CHECK RESPONSE CONTAINS ACCESS TOKEN
+        if(refreshDataJSON.success) {
+          setIsAuthenticated(true)
+          await getUserData()
+        }
+      } catch (err) {
+        return
+      }
+      loadUser()
+    }
     refreshToken()
     setInterval(() => {
       refreshToken()
     }, 1000 * 60 * 30)
-  })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const refreshToken = async () => {
+  const getUserData = async () => {
     try {
-      const refreshData = await fetch("http://localhost:3000/api/token/refresh", {
+      const basicData = await fetch("http://localhost:3000/api/user-info", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -41,25 +64,15 @@ export const AuthProvider = ({ children, loadUser }) => {
         },
         credentials: "include"
       });
-      const refreshDataJSON = await refreshData.json();
-      // CHECK RESPONSE CONTAINS ACCESS TOKEN
-      if(refreshDataJSON.success) {
-        setIsAuthenticated(true)
+      const basicDataJSON = await basicData.json();
+      if(basicDataJSON.success) {
+        setUserData(basicDataJSON.data)
       }
     } catch (err) {
-      return
+      throw new Error("Error getting user basic data");
     }
-    loadUser()
-  }
+  };
 
-  // const getUserBasicFromToken = async (access_token) => {
-  //   try {
-  //     // const decodedPayload = jwtDecode(access_token);
-  //     // setUserBasic(decodedPayload);
-  //   } catch (err) {
-  //     console.log("Error Parsing Token, verify token's authenticity");
-  //   }
-  // };
 
   const login = async (username, password) => {
     try {
@@ -76,6 +89,7 @@ export const AuthProvider = ({ children, loadUser }) => {
       // CHECK RESPONSE CONTAINS ACCESS TOKEN
       if(loginDataJSON.success) {
         setIsAuthenticated(true)
+        await getUserData()
         toast.success(AUTH_STATUS.AUTHENTICATED, { duration: 1500 })
         return [true, AUTH_STATUS.AUTHENTICATED];
       } else {
@@ -110,7 +124,7 @@ export const AuthProvider = ({ children, loadUser }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ refreshToken, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ userData, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

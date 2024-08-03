@@ -14,6 +14,21 @@ export const getUserTypes = async (req: Request, res: Response, next: NextFuncti
   return res.status(200).json({ success: true, data: UserRepository.getUserTypes() });
 };
 
+export const getUserBasicInfo = async (req: Request, res: Response, next: NextFunction) => {
+  // extract user from request
+  const user = req.session?.user;
+  // validate user is authenticated
+  if (!user) return res.status(401).json({ success: false, message: "User is not authenticated." });
+  // get user basic info
+  const userID = user._id
+  try {
+    const userBasicInfo = UserRepository.userBasicInfo({ _id: userID });
+    return res.status(200).json({ success: true, data: userBasicInfo});
+  } catch {
+    return res.status(401).json({ success: false, message: "User not found." });
+  }
+};
+
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   // 1. Get username and password request parameters
   const { username, password } = req.body;

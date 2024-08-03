@@ -33,6 +33,13 @@ export type LoginCredentials = {
   password: string;
 };
 
+export type UserBasicInfo = {
+  username: string,
+  user_type: string,
+  nombre: string,
+  apellido: string
+}
+
 export type RegisterCredentials = {
   username: string;
   password: string;
@@ -95,6 +102,17 @@ export class UserRepository {
 
   static getUserTypes() {
     return USER_TYPES;
+  }
+
+  static userBasicInfo({ _id }): UserBasicInfo {
+    const user = User.findOne({ _id });
+    if (!user) throw new Error("User with specified id not found.");
+    return {
+      username: user.username,
+      nombre: user.nombre,
+      apellido: user.apellido,
+      user_type: user.user_type
+    }
   }
 }
 
