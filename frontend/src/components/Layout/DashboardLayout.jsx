@@ -7,6 +7,10 @@ import { CrearUsuarioPage } from "../../pages/CrearUsuarioPage";
 import { MateriaPage } from "../../pages/MateriaPage";
 import { NotasPage } from "../../pages/NotasPage";
 import { Page404 } from "../../pages/404page";
+import { AdminRoutes } from "../../middleware/AdminRoutes";
+import { ProffesorAndStudentRoutes } from "../../middleware/ProffesorAndStudentRoutes";
+import { ProffesorRoutes } from "../../middleware/ProffesorRoutes";
+import { StudentRoutes } from "../../middleware/StudentRoutes";
 export const Layout = () => {
   return (
     <>
@@ -16,13 +20,32 @@ export const Layout = () => {
         </div>
         <div className="w-full py-6 px-10 rounded-md bg-gray-100 dark:bg-slate-800 md:overflow-y-auto transition-all">
           <Routes>
+            {/* MAIN DASHBOARD ROUTE */}
             <Route path="/" element={<ClassCardContainer />} />
-            <Route path="/usuarios" element={<UsuariosPage />} />
-            <Route path="/usuarios/:idUsuario" element={<EditUsuarioPage />} />
-            <Route path="/usuarios/crear" element={<CrearUsuarioPage />} />
-            <Route path="/materias/:idMateria/*" element={<MateriaPage />} />
-            <Route path="/notas" element={<NotasPage />} />
-            <Route path="/*" element={<Page404/>} />
+
+            {/* ADMIN ROUTES */}
+            <Route element={<AdminRoutes />}>
+              <Route path="/usuarios" element={<UsuariosPage />} />
+              <Route path="/usuarios/:idUsuario" element={<EditUsuarioPage />} />
+              <Route path="/usuarios/crear" element={<CrearUsuarioPage />} />
+            </Route>
+
+            {/* PROFESSOR AND STUDENT ROUTES */}
+            <Route element={<ProffesorAndStudentRoutes />}>
+              <Route path="/materias/:idMateria/*" element={<MateriaPage />} />
+            </Route>
+
+            {/* PROFFESOR ROUTES */}
+            <Route element={<ProffesorRoutes />}>
+              <Route path="/materias/:idMateria/*" element={<MateriaPage />} />
+            </Route>
+
+            {/* STUDENT ROUTES */}
+            <Route element={<StudentRoutes />}>
+              <Route path="/notas" element={<NotasPage />} />
+            </Route>
+
+            <Route path="/*" element={<Page404 />} />
           </Routes>
         </div>
       </div>

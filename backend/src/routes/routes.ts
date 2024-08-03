@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/api/login', login)
 router.post('/api/create', create)
 router.post('/api/logout', logout)
-router.post('/api/user-types', getUserTypes)
+router.get('/api/user-types', getUserTypes)
 router.post('/api/user-info', getUserBasicInfo)
 router.post('/api/token/refresh', refresh)
 export default router

@@ -1,13 +1,30 @@
-import { Link, Navigate, redirect, useParams } from "react-router-dom";
-import { Layout } from "../components/Layout/DashboardLayout";
+import { Link } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import Swal from "sweetalert2";
 
 export const CrearUsuarioPage = () => {
+
+  const [ userTypes, setUserTypes ] = useState(null)
+
   useEffect(() => {
-    
+    const getUserTypes = async () => {
+      try {
+        const userTypesData = await fetch("http://localhost:3000/api/user-types", {
+          method: "GET",
+          credentials: "include"
+        })
+        const userTypesDataJSON = await userTypesData.json()
+
+        if(userTypesDataJSON.success) {
+          setUserTypes(userTypesDataJSON.data)
+        }
+      } catch {
+        console.log("Failed to fetch user types")
+      }
+    }
+    getUserTypes()
   }, []);
 
   const handleSubmit = (e) => {
@@ -20,9 +37,9 @@ export const CrearUsuarioPage = () => {
   };
 
   return (
-    <Layout>
+    <>
       <Link
-        to={"/usuarios"}
+        to={"../usuarios"}
         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
       >
         <FontAwesomeIcon
@@ -34,10 +51,9 @@ export const CrearUsuarioPage = () => {
       <h1 className="text-3xl py-5 font-bold text-black dark:text-white transition-all">
         Crear Usuario
       </h1>
-
       <form onSubmit={handleSubmit}>
         <label
-          for="tipo"
+          htmlFor="tipo"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Tipo de Usuario:
@@ -46,9 +62,11 @@ export const CrearUsuarioPage = () => {
           id="tipo"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 lg:w-1/3 mb-5"
         >
-          <option value={1}>Estudiante</option>
-          <option value={2}>Administrador</option>
-          <option value={3}>Profesor</option>
+          {userTypes && userTypes.map((userType, k) => {
+            return (
+              <option key={k} value={userType}>{userType.charAt(0).toUpperCase() + userType.slice(1)}</option>
+            )
+          })}
         </select>
         <p className="block mb-5 text-sm font-medium text-gray-900 dark:text-white">
           Datos Personales:
@@ -64,7 +82,7 @@ export const CrearUsuarioPage = () => {
               required
             />
             <label
-              for="nombre"
+              htmlFor="nombre"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Nombre
@@ -80,7 +98,7 @@ export const CrearUsuarioPage = () => {
               required
             />
             <label
-              for="apellidos"
+              htmlFor="apellidos"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Apellido
@@ -97,7 +115,7 @@ export const CrearUsuarioPage = () => {
             required
           />
           <label
-            for="email"
+            htmlFor="email"
             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Dirección de email
@@ -113,7 +131,7 @@ export const CrearUsuarioPage = () => {
             required
           />
           <label
-            for="telefono"
+            htmlFor="telefono"
             className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Telefono / Celular
@@ -126,6 +144,6 @@ export const CrearUsuarioPage = () => {
           Crear Usuario
         </button>
       </form>
-    </Layout>
+    </>
   );
 };
