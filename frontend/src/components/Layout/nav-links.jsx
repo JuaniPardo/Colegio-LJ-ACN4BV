@@ -1,18 +1,24 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthProvider";
+import { USER_TYPES } from "../../utils/UserTypes"
 
 // Map of links to display in the side navigation.
 const links = [
   {
     name: "Notas",
     href: "/dashboard/notas",
-    user_type: "student",
+    user_type: [USER_TYPES.STUDENT],
+  },
+  {
+    name: "Mis Clases",
+    href: "/dashboard/clases",
+    user_type: [USER_TYPES.STUDENT, USER_TYPES.PROFESSOR],
   },
   {
     name: "Usuarios",
     href: "/dashboard/usuarios",
-    user_type: "administrator",
+    user_type: [USER_TYPES.ADMINISTATOR],
   },
 ];
 
@@ -38,7 +44,7 @@ export default function NavLinks({ user_type }) {
         Dashboard
       </Link>
       {navLinks.map((link, k) => {
-        if (link.user_type == user_type) {
+        if (link.user_type.indexOf(user_type) !== -1) {
           return (
             <Link key={k} to={link.href} className={"flex py-4 px-5 mb-4 grow items-center justify-center gap-2 rounded-md bg-gray-50  text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start dark:bg-slate-700 dark:text-white dark:hover:bg-slate-400 dark:hover:text-blue-900 transition-all"}>
               {link.name}

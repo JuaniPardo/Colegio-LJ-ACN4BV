@@ -21,7 +21,7 @@ export const Layout = () => {
         <div className="w-full py-6 px-10 rounded-md bg-gray-100 dark:bg-slate-800 md:overflow-y-auto transition-all">
           <Routes>
             {/* MAIN DASHBOARD ROUTE */}
-            <Route path="/" element={<ClassCardContainer />} />
+            <Route path="/" element={<h1> Main Dashboard </h1>} />
 
             {/* ADMIN ROUTES */}
             <Route element={<AdminRoutes />}>
@@ -32,6 +32,7 @@ export const Layout = () => {
 
             {/* PROFESSOR AND STUDENT ROUTES */}
             <Route element={<ProfessorAndStudentRoutes />}>
+              <Route path="clases" element={<ClassCardContainer />} />
               <Route path="/materias/:idMateria/*" element={<MateriaPage />} />
             </Route>
 
