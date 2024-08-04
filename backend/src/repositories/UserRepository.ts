@@ -48,6 +48,13 @@ export type RegisterCredentials = {
   nombre: string;
   apellido: string;
   email: string;
+};
+
+export type UpdateCredentials = {
+  id: string
+  user_type: string;
+  nombre: string;
+  apellido: string;
   is_active: boolean;
 };
 
@@ -81,6 +88,27 @@ export class UserRepository {
       email,
       user_type,
       is_active: true,
+    }).save();
+
+    return id;
+  }
+
+  static async update({ id, is_active, nombre, apellido, user_type }: UpdateCredentials) {
+    // 1. Validations
+    Validation.usertype(user_type);
+    Validation.nombre(nombre);
+    Validation.apellido(apellido);
+    // 2. Check user doesn't exists
+    const userToBeUpdated = User.findOne({ _id: id });
+    if (!userToBeUpdated) {
+      throw new UserNotFoundError("user with specified id not found")
+    }
+
+    userToBeUpdated.update({
+      nombre,
+      apellido,
+      user_type,
+      is_active,
     }).save();
 
     return id;
@@ -130,6 +158,24 @@ export class UserRepository {
 }
 
 class Validation {
+  static nombre(nombre: string) {
+    if (typeof nombre !== "string") {
+      throw new Error("nombre must be a string");
+    }
+    if (nombre.length < 3) {
+      throw new Error("nombre must be at least 3 characters long");
+    }
+  }
+
+  static apellido(apellido: string) {
+    if (typeof apellido !== "string") {
+      throw new Error("apellido must be a string");
+    }
+    if (apellido.length < 3) {
+      throw new Error("apellido must be at least 3 characters long");
+    }
+  }
+  
   static username(username: string) {
     if (typeof username !== "string") {
       throw new Error("username must be a string");
@@ -171,6 +217,13 @@ class Validation {
 }
 
 export class UserTypeError extends Error {
+  constructor(message) {
+    super();
+    this.message = message;
+  }
+}
+
+export class UserNotFoundError extends Error {
   constructor(message) {
     super();
     this.message = message;

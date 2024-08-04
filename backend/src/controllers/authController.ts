@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import "dotenv/config";
-import { RegisterCredentials, USER_TYPES_MAP, UserRepository, UserTypeError } from "../repositories/UserRepository";
+import { RegisterCredentials, UpdateCredentials, USER_TYPES_MAP, UserEmailNotAvailableError, UsernameNotAvailableError, UserNotFoundError, UserRepository, UserTypeError } from "../repositories/UserRepository";
 import { MissingJWTSecretError } from "../config/errors/configErrors";
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
@@ -98,7 +98,6 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
       nombre,
       apellido,
       email,
-      is_active: true,
       user_type,
     });
     res.send({ id });
@@ -107,6 +106,54 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
       res.status(400).json({
         success: false,
         message: `User type "${user_type} is not a valid type of user.`,
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "Registration failed, please verify missing or wrong fields.",
+        error_message: err.message,
+      });
+    }
+  }
+};
+
+export const update = async (req: Request, res: Response, next: NextFunction) => {
+  // extract user from request
+  const user = req.session?.user;
+  // validate user is authenticated
+  if (!user) return res.status(401).json({ success: false, message: "User is not authenticated." });
+  // validate user is admin
+  if (user.user_type !== USER_TYPES_MAP.ADMINISTRATOR) return res.status(403).json({ success: false, message: "You are unauthorized to perform this action." });
+  // 1. Get data in request body
+  const { id, user_type, nombre, apellido, is_active }: UpdateCredentials = req.body;
+  // 2. Validate data
+  let missingField: string | null = null;
+  if (!id) missingField = "id is required";
+  if (!nombre) missingField = "nombre is required";
+  if (!apellido) missingField = "apellido is required";
+  if (!user_type) missingField = "user_type is required";
+  if (!is_active) missingField = "is_active is required";
+  if (missingField != null) return res.status(400).json({ message: `${missingField}` });
+  // 3. Connect to db
+  try {
+    const updatedID = await UserRepository.update({
+      id,
+      nombre,
+      apellido,
+      user_type,
+      is_active
+    });
+    res.status(200).json({ success: true, message: `${updatedID} has been updated successfully` });
+  } catch (err: any) {
+    if (err instanceof UserTypeError) {
+      res.status(400).json({
+        success: false,
+        message: `User type "${user_type} is not a valid type of user.`,
+      });
+    } else if (err instanceof UserNotFoundError) {
+      res.status(400).json({
+        success: false,
+        message: `User "${id} was not found.`,
       });
     } else {
       res.status(400).json({
