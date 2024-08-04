@@ -8,8 +8,8 @@ import { MateriaPage } from "../../pages/MateriaPage";
 import { NotasPage } from "../../pages/NotasPage";
 import { Page404 } from "../../pages/404page";
 import { AdminRoutes } from "../../middleware/AdminRoutes";
-import { ProffesorAndStudentRoutes } from "../../middleware/ProffesorAndStudentRoutes";
-import { ProffesorRoutes } from "../../middleware/ProffesorRoutes";
+import { ProfessorAndStudentRoutes } from "../../middleware/ProfessorAndStudentRoutes";
+import { ProfessorRoutes } from "../../middleware/ProfessorRoutes";
 import { StudentRoutes } from "../../middleware/StudentRoutes";
 export const Layout = () => {
   return (
@@ -31,12 +31,12 @@ export const Layout = () => {
             </Route>
 
             {/* PROFESSOR AND STUDENT ROUTES */}
-            <Route element={<ProffesorAndStudentRoutes />}>
+            <Route element={<ProfessorAndStudentRoutes />}>
               <Route path="/materias/:idMateria/*" element={<MateriaPage />} />
             </Route>
 
             {/* PROFFESOR ROUTES */}
-            <Route element={<ProffesorRoutes />}>
+            <Route element={<ProfessorRoutes />}>
               <Route path="/materias/:idMateria/*" element={<MateriaPage />} />
             </Route>
 

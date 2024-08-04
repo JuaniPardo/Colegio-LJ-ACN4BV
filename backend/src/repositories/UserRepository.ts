@@ -7,7 +7,7 @@ const { Schema } = new DBLocal({ path: "./db" });
 
 export const USER_TYPES_MAP = {
   STUDENT: "student",
-  PROFESOR: "proffesor",
+  PROFESOR: "professor",
   ADMINISTRATOR: "administrator",
 };
 export const USER_TYPES = Object.values(USER_TYPES_MAP);

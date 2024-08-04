@@ -2,10 +2,10 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
 import { USER_TYPES } from "../utils/UserTypes";
 
-export const ProffesorAndStudentRoutes = () => {
+export const ProfessorAndStudentRoutes = () => {
     // TODO
     const { userData } = useAuth();
     return (
-        userData.user_type == USER_TYPES.PROFFESOR || userData.user_type == USER_TYPES.STUDENT ? <Outlet /> : <Navigate to="/dashboard" />
+        userData.user_type == USER_TYPES.PROFESSOR || userData.user_type == USER_TYPES.STUDENT ? <Outlet /> : <Navigate to="/dashboard" />
     )
 }
