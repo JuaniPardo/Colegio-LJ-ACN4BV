@@ -58,7 +58,7 @@ export const EditUsuarioPage = () => {
 
   return (
     <>
-      <Link to={"/usuarios"} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+      <Link to={"../usuarios"} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
         <FontAwesomeIcon icon={faArrowLeft} className="text-blue-600 dark:text-blue-500 hover:underline" />
         Volver a Usuarios
       </Link>

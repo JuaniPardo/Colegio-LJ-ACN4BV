@@ -14,12 +14,6 @@ const AUTH_STATUS = {
     "Ha ocurrido un error interno, intente de nuevo. En caso de persistir comuniquese con un administrador",
 };
 
-const LOGOUT_STATUS = {
-  SUCCESS: "Sesión cerrada exitosamente",
-  FAILED: "Algo ha salido mal, vuelve a intentarlo",
-  INTERNAL_ERROR: "Ha ocurrido un error interno, intente de nuevo. En caso de persistir comuniquese con un administrador"
-}
-
 export const AuthProvider = ({ children, loadUser }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState({});
@@ -88,9 +82,8 @@ export const AuthProvider = ({ children, loadUser }) => {
       const loginDataJSON = await loginData.json();
       // CHECK RESPONSE CONTAINS ACCESS TOKEN
       if(loginDataJSON.success) {
-        setIsAuthenticated(true)
         await getUserData()
-        toast.success(AUTH_STATUS.AUTHENTICATED, { duration: 1500 })
+        setIsAuthenticated(true)
         return [true, AUTH_STATUS.AUTHENTICATED];
       } else {
         return [false, AUTH_STATUS.UNAUTHORIZED];
@@ -113,13 +106,10 @@ export const AuthProvider = ({ children, loadUser }) => {
     const logoutDataJSON = await logoutData.json();
     if(logoutDataJSON.success) {
       setIsAuthenticated(false)
-      toast.success(LOGOUT_STATUS.SUCCESS, { duration: 1500 })
       return true
     } else if (logoutDataJSON.message) {
-      toast.error(LOGOUT_STATUS.FAILED, { duration: 1500 })
       return false
     }
-    toast.error(LOGOUT_STATUS.INTERNAL_ERROR, { duration: 1500 })
     return false
   };
 

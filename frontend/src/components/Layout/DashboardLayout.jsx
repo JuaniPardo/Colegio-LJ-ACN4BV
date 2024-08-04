@@ -11,6 +11,7 @@ import { AdminRoutes } from "../../middleware/AdminRoutes";
 import { ProfessorAndStudentRoutes } from "../../middleware/ProfessorAndStudentRoutes";
 import { ProfessorRoutes } from "../../middleware/ProfessorRoutes";
 import { StudentRoutes } from "../../middleware/StudentRoutes";
+
 export const Layout = () => {
   return (
     <>

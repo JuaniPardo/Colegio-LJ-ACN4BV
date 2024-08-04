@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthProvider";
 import { USER_TYPES } from "../../utils/UserTypes"
+import { toast } from "sonner";
 
 // Map of links to display in the side navigation.
 const links = [
@@ -28,9 +29,13 @@ export default function NavLinks({ user_type }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    const logoutResult = logout();
-    logoutResult.then((result) => {
-      if (result) navigate("/login");
+    toast.promise(logout, {
+      loading: 'Cerrando sesión...',
+      success: () => {
+        navigate("/login")
+        return `Cierre de sesión exitoso`;
+      },
+      error: 'Algo ha salido mal, pulsa F5 y vuelve a intentar.',
     });
   };
 
