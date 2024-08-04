@@ -1,6 +1,11 @@
 import NavLinks from "./nav-links.jsx";
 import { useAuth } from "../../contexts/AuthProvider.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
+import { faScrewdriver } from "@fortawesome/free-solid-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import { USER_TYPES } from "../../utils/UserTypes.jsx";
 
 export default function SideNav() {
   const [modoOscuro, setModoOscuro] = useState(false);
@@ -40,7 +45,7 @@ export default function SideNav() {
   return (
     <div className="flex flex-col">
       <a className="text-2xl md:text-3xl flex items-end justify-start bg-blue-600 p-7" href="/">
-        <div className="text-white text-1xl md:text-2xl font-bold">{userData.nombre} {userData.apellido}</div>
+        <div className="text-white text-1xl md:text-2xl font-bold">{userData.nombre} {userData.apellido}<FontAwesomeIcon icon={(userData.user_type === USER_TYPES.STUDENT) ? faGraduationCap : (userData.user_type === USER_TYPES.ADMINISTATOR) ? faScrewdriver : faPencil} className="ms-2"/></div>
       </a>
       <div className="flex justify-between flex-col p-3">
         <label className="inline-flex items-center mb-2 cursor-pointer p-3">
