@@ -7,6 +7,15 @@ export const UsuariosTable = () => {
     const [ loadingUsuarios, setLoadingUsuarios ] = useState(true)
     
     const generarUsuarios = () => {
+        if (usuarios.length == 0) {
+            return (
+                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <td colSpan={7} className="px-6 py-4">
+                            No se encontrarón usuarios
+                        </td>
+                </tr>
+            )
+        }
         return usuarios.map((usuario, key) => {
             return (
                 <tr key={key} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
