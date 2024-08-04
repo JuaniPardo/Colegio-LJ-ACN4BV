@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { useAuth } from "../contexts/AuthProvider";
 
 export const UsuariosTable = () => {
-
+    const { userData } = useAuth()
     const [ usuarios, setUsuarios ] = useState([]);
     const [ loadingUsuarios, setLoadingUsuarios ] = useState(true)
     
     const generarUsuarios = () => {
-        if (usuarios.length == 0) {
+        const usuariosFiltered = usuarios.filter((usuario) => usuario.username !== userData.username)
+        if (usuariosFiltered.length == 0) {
             return (
                 <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                         <td colSpan={7} className="px-6 py-4">
@@ -16,7 +18,7 @@ export const UsuariosTable = () => {
                 </tr>
             )
         }
-        return usuarios.map((usuario, key) => {
+        return usuariosFiltered.map((usuario, key) => {
             return (
                 <tr key={key} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">

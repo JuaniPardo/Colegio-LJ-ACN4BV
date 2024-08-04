@@ -100,18 +100,27 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
       email,
       user_type,
     });
-    res.send({ id });
+    res.status(200).json({ success: true, id });
   } catch (err: any) {
     if (err instanceof UserTypeError) {
       res.status(400).json({
         success: false,
-        message: `User type "${user_type} is not a valid type of user.`,
+        message: `User type "${user_type}" is not a valid type of user.`,
+      });
+    } else if (err instanceof UsernameNotAvailableError) {
+      res.status(400).json({
+        success: false,
+        message: `Username "${username}" already exists.`,
+      });
+    } else if (err instanceof UserEmailNotAvailableError) {
+      res.status(400).json({
+        success: false,
+        message: `Email "${email}" already exists.`,
       });
     } else {
       res.status(400).json({
         success: false,
-        message: "Registration failed, please verify missing or wrong fields.",
-        error_message: err.message,
+        message: err.message
       });
     }
   }
