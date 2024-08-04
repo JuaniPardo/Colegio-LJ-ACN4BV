@@ -4,6 +4,21 @@ import "dotenv/config";
 import { RegisterCredentials, USER_TYPES_MAP, UserRepository, UserTypeError } from "../repositories/UserRepository";
 import { MissingJWTSecretError } from "../config/errors/configErrors";
 
+export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+  // extract user from request
+  const user = req.session?.user;
+  // validate user is authenticated
+  if (!user) return res.status(401).json({ success: false, message: "User is not authenticated." });
+  // validate user is admin
+  if (user.user_type !== USER_TYPES_MAP.ADMINISTRATOR) return res.status(403).json({ success: false, message: "You are unauthorized to perform this action." });
+  try {
+    const users = await UserRepository.getAllUsers()
+    return res.status(200).json({ success: true, data: users });
+  } catch {
+    return res.status(500).json({ success: false, message: "Internal server error getting users" });
+  }
+}
+
 export const getUserTypes = async (req: Request, res: Response, next: NextFunction) => {
   // extract user from request
   const user = req.session?.user;

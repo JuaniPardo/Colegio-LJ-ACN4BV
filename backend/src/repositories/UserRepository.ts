@@ -86,6 +86,19 @@ export class UserRepository {
     return id;
   }
 
+  static async getAllUsers() {
+    try {
+      const users = User.find();
+      const usersFiltered = users.map((user) => {
+        const { password, ...userFiltered } = user
+        return userFiltered
+      })
+      return usersFiltered
+    } catch (err) {
+      throw new Error("Error fetching users from db")
+    }
+  }
+
   static async login({ username, password }: LoginCredentials) {
     // 1. Validations
     Validation.username(username);
