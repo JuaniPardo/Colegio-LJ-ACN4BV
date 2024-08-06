@@ -44,6 +44,25 @@ export const getUserBasicInfo = async (req: Request, res: Response, next: NextFu
   }
 };
 
+export const getUserData = async (req: Request, res: Response, next: NextFunction) => {
+  // validate params
+  const { id } = req.params
+  if (!id) return res.status(400).json({ success: false, message: "id is required." })
+  // extract user from request
+  const user = req.session?.user;
+  // validate user is authenticated
+  if (!user) return res.status(401).json({ success: false, message: "User is not authenticated." });
+  // validate user is admin
+  if (user.user_type !== USER_TYPES_MAP.ADMINISTRATOR) return res.status(403).json({ success: false, message: "You are unauthorized to perform this action." });
+  try {
+    // get user basic info
+    const userData = UserRepository.userData({_id: id})
+    return res.status(200).json({ success: true, data: userData });
+  } catch(error: any) {
+    return res.status(404).json({ success: false, message: error.message})
+  }
+};
+
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   // 1. Get username and password request parameters
   const { username, password } = req.body;

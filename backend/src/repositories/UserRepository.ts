@@ -28,6 +28,17 @@ export type UserPayload = {
   user_type: string;
 };
 
+export type UserData = {
+  _id: string,
+  username: string,
+  password: string,
+  nombre: string,
+  apellido: string,
+  email: string,
+  user_type: string,
+  is_active: boolean,
+}
+
 export type LoginCredentials = {
   username: string;
   password: string;
@@ -154,6 +165,12 @@ export class UserRepository {
       apellido: user.apellido,
       user_type: user.user_type
     }
+  }
+
+  static userData({ _id }): UserData {
+    const user = User.findOne({ _id });
+    if (!user) throw new Error("User with specified id not found.");
+    return user
   }
 }
 
