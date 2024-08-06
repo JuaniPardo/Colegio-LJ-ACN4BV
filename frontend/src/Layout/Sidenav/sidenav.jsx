@@ -7,7 +7,7 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { USER_TYPES } from "../../utils/UserTypes.jsx";
 
-export default function SideNav() {
+export const SideNav =  () => {
   const [modoOscuro, setModoOscuro] = useState(false);
   const { userData } = useAuth()
 

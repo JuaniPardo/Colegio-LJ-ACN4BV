@@ -1,16 +1,17 @@
 import { Route, Routes } from "react-router-dom";
-import SideNav from "./sidenav";
-import { ClassCardContainer } from "../ClassCardContainer";
-import { UsuariosPage } from "../../pages/UsuariosPage";
-import { EditUsuarioPage } from "../../pages/EditUsuarioPage";
-import { CrearUsuarioPage } from "../../pages/CrearUsuarioPage";
-import { MateriaPage } from "../../pages/MateriaPage";
-import { NotasPage } from "../../pages/NotasPage";
-import { Page404 } from "../../pages/404page";
-import { AdminRoutes } from "../../middleware/AdminRoutes";
-import { ProfessorAndStudentRoutes } from "../../middleware/ProfessorAndStudentRoutes";
-import { ProfessorRoutes } from "../../middleware/ProfessorRoutes";
-import { StudentRoutes } from "../../middleware/StudentRoutes";
+import { ClassCardContainer } from "../components/ClassCardContainer";
+import { UsuariosPage } from "../pages/UsuariosPage";
+import { EditUsuarioPage } from "../pages/EditUsuarioPage";
+import { CrearUsuarioPage } from "../pages/CrearUsuarioPage";
+import { MateriaPage } from "../pages/MateriaPage";
+import { NotasPage } from "../pages/NotasPage";
+import { Page404 } from "../pages/404page";
+import { AdminRoutes } from "../middleware/AdminRoutes";
+import { ProfessorAndStudentRoutes } from "../middleware/ProfessorAndStudentRoutes";
+import { ProfessorRoutes } from "../middleware/ProfessorRoutes";
+import { StudentRoutes } from "../middleware/StudentRoutes";
+import { DashboardPage } from "../pages/DashboardPage";
+import { SideNav } from "./Sidenav/sidenav";
 
 export const Layout = () => {
   return (
@@ -22,7 +23,7 @@ export const Layout = () => {
         <div className="w-full py-6 px-10 rounded-md bg-gray-100 dark:bg-slate-800 md:overflow-y-auto transition-all">
           <Routes>
             {/* MAIN DASHBOARD ROUTE */}
-            <Route path="/" element={<h1> Main Dashboard </h1>} />
+            <Route path="/" element={<DashboardPage />} />
 
             {/* ADMIN ROUTES */}
             <Route element={<AdminRoutes />}>

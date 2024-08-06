@@ -1,5 +1,3 @@
-import { Layout } from "../components/Layout/DashboardLayout";
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const materias = [
@@ -46,6 +44,7 @@ export const MateriaPage = () => {
       <h1 className="text-3xl py-5 mb-4 font-bold text-black dark:text-white transition-all">
         Mis Clases
       </h1>
+      <button></button>
       {idMateria}
     </>
   );

@@ -5,12 +5,13 @@ import { useAuth } from "../contexts/AuthProvider";
 export const UsuariosTable = () => {
   const { userData } = useAuth();
   const [usuarios, setUsuarios] = useState([]);
-  const [filteredUsuarios, setFilteredUsuarios] = useState([]);
-  const [loadingUsuarios, setLoadingUsuarios] = useState(true);
+  const [loadingUsuarios, setLoadingUsuarios] = useState(false);
 
 
   useEffect(() => {
     const getUsuarios = async () => {
+      
+      setLoadingUsuarios(true);
       try {
         const usersData = await fetch("http://localhost:3000/api/get-users", {
           method: "GET",
@@ -20,11 +21,11 @@ export const UsuariosTable = () => {
 
         if (usersDataJSON.success) {
           setUsuarios(usersDataJSON.data);
-          setFilteredUsuarios(usersDataJSON.data);
-          setLoadingUsuarios(false);
         }
       } catch {
         console.log("Failed to fetch user types");
+      } finally {
+        setLoadingUsuarios(false)
       }
     };
     getUsuarios();
@@ -32,19 +33,6 @@ export const UsuariosTable = () => {
 
   return (
     <>
-      {/* <form className="w-100 mb-4" onSubmit={handleSearch}>
-        <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white  transition-all">
-          Search
-        </label>
-        <div className="relative">
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400  transition-all" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-            </svg>
-          </div>
-          <input type="search" onChange={handleSearch} id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 transition-all" placeholder="Buscar usuario por correo, nombre, apellido..." required />
-        </div>
-      </form> */}
       {loadingUsuarios && (
         <div className="flex flex-col justify-center items-center h-1/3">
           <div role="status">
@@ -88,14 +76,14 @@ export const UsuariosTable = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredUsuarios.length <= 0 ? (
+              {usuarios.length <= 0 ? (
                 <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                   <td colSpan={7} className="px-6 py-4">
                     No se encontrarón usuarios
                   </td>
                 </tr>
               ) : (
-                filteredUsuarios.map((usuario, key) => {
+                usuarios.map((usuario, key) => {
                   if (usuario.username == userData.username) return;
                   return (
                     <tr key={key} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">

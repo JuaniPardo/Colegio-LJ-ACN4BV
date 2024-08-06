@@ -3,10 +3,11 @@ import { Toaster } from "sonner";
 import { LoginPage } from "./pages/LoginPage";
 import { AuthProvider } from "./contexts/AuthProvider.jsx";
 import { AuthRoutes } from "./middleware/AuthRoutes.jsx";
-import { Layout } from "./components/Layout/DashboardLayout.jsx";
+
 import { useState } from "react";
 import { LoadingAppSpinner } from "./components/AppComponents/LoadingAppSpinner.jsx";
 import { Page404 } from "./pages/404page.jsx";
+import { Layout } from "./Layout/DashboardLayout.jsx";
 
 const APP_STATUS = {
   LOADING: "Cargando aplicacion...",
