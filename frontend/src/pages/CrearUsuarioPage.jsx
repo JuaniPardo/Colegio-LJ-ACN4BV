@@ -27,7 +27,7 @@ export const CrearUsuarioPage = () => {
   useEffect(() => {
     const getUserTypes = async () => {
       try {
-        const userTypesData = await fetch("http://localhost:3000/api/user-types", {
+        const userTypesData = await fetch("http://localhost:3000/api/users/types", {
           method: "GET",
           credentials: "include"
         })
@@ -45,7 +45,7 @@ export const CrearUsuarioPage = () => {
 
   const createUser = async (formObject) => {
     try {
-      const loginData = await fetch("http://localhost:3000/api/create", {
+      const loginData = await fetch("http://localhost:3000/api/users/create", {
         method: "POST",
         headers: {
           Accept: "application/json",

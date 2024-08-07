@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import "dotenv/config";
-import { RegisterCredentials, UpdateCredentials, USER_TYPES_MAP, UserEmailNotAvailableError, UsernameNotAvailableError, UserNotFoundError, UserRepository, UserTypeError } from "../repositories/UserRepository";
+import { RegisterCredentials, UpdateCredentials, USER_TYPES_MAP, UserEmailNotAvailableError, UserIsNotActiveError, UsernameNotAvailableError, UserNotFoundError, UserRepository, UserTypeError } from "../repositories/UserRepository";
 import { MissingJWTSecretError } from "../config/errors/configErrors";
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
@@ -90,6 +90,9 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       .cookie("refresh_token", refreshToken, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7 })
       .json({ success: true, message: "Login successfully.", access_token: accessToken, refresh_token: refreshToken });
   } catch (err) {
+    if(err instanceof UserIsNotActiveError) {
+      return res.status(403).json({ success: false, code: 403, message: "User is not active in the system. Please contact an administrator." });
+    }
     return res.status(400).json({ success: false, message: "Login failed, please verify your credentials." });
   }
 };
@@ -160,7 +163,7 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
   if (!nombre) missingField = "nombre is required";
   if (!apellido) missingField = "apellido is required";
   if (!user_type) missingField = "user_type is required";
-  if (!is_active) missingField = "is_active is required";
+  if (is_active === null) missingField = "is_active is required";
   if (missingField != null) return res.status(400).json({ message: `${missingField}` });
   // 3. Connect to db
   try {

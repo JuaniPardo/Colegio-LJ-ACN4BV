@@ -145,6 +145,7 @@ export class UserRepository {
     // 2. Check user doesn't exists
     const user = User.findOne({ username });
     if (!user) throw new Error("username not found");
+    if (!user.is_active) throw new UserIsNotActiveError("User is not active");
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) throw new Error("password is not valid");
 
@@ -255,6 +256,13 @@ export class UserEmailNotAvailableError extends Error {
 }
 
 export class UsernameNotAvailableError extends Error {
+  constructor(message) {
+    super();
+    this.message = message;
+  }
+}
+
+export class UserIsNotActiveError extends Error {
   constructor(message) {
     super();
     this.message = message;

@@ -7,9 +7,9 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { USER_TYPES } from "../../utils/UserTypes.jsx";
 
-export const SideNav =  () => {
+export const SideNav = () => {
   const [modoOscuro, setModoOscuro] = useState(false);
-  const { userData } = useAuth()
+  const { userData } = useAuth();
 
   const loadDarkMode = () => {
     try {
@@ -44,8 +44,14 @@ export const SideNav =  () => {
 
   return (
     <div className="flex flex-col">
-      <a className="text-2xl md:text-3xl flex items-end justify-start bg-blue-600 p-7" href="/">
-        <div className="text-white text-1xl md:text-2xl font-bold">{userData.nombre} {userData.apellido}<FontAwesomeIcon icon={(userData.user_type === USER_TYPES.STUDENT) ? faGraduationCap : (userData.user_type === USER_TYPES.ADMINISTATOR) ? faScrewdriver : faPencil} className="ms-2"/></div>
+      <a className="text-2xl md:text-3xl flex flex-col bg-blue-600 p-7" href="/">
+        <div className="text-white text-xl md:text-xl font-bold">
+          {userData.nombre} {userData.apellido}
+        </div>
+        <div className="text-blue-200 text-sm md:text-sm font-bold">
+          <FontAwesomeIcon icon={userData.user_type === USER_TYPES.STUDENT ? faGraduationCap : userData.user_type === USER_TYPES.ADMINISTATOR ? faScrewdriver : faPencil} className="me-2" />
+          {userData.user_type === USER_TYPES.STUDENT ? "Estudiante" : userData.user_type === USER_TYPES.ADMINISTATOR ? "Administrador" : "Profesor"}
+        </div>
       </a>
       <div className="flex justify-between flex-col p-3">
         <label className="inline-flex items-center mb-2 cursor-pointer p-3">
@@ -57,4 +63,4 @@ export const SideNav =  () => {
       </div>
     </div>
   );
-}
+};

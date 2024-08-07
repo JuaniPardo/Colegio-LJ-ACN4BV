@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { toast } from 'sonner'
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -7,6 +6,7 @@ export const useAuth = () => {
 };
 
 const AUTH_STATUS = {
+  UNACTIVE_USER: "El usuario se encuentra inactivo. Por favor, contactate con un administrador",
   UNAUTHENTICATED: "El usuario no se encuentra autenticado", 
   AUTHENTICATED: "Inicio de sesión exitoso",
   UNAUTHORIZED: "Usuario y/o contraseña incorrecto/s",
@@ -85,6 +85,8 @@ export const AuthProvider = ({ children, loadUser }) => {
         await getUserData()
         setIsAuthenticated(true)
         return [true, AUTH_STATUS.AUTHENTICATED];
+      } else if(loginDataJSON.code == 403) {
+        return [false, AUTH_STATUS.UNACTIVE_USER]
       } else {
         return [false, AUTH_STATUS.UNAUTHORIZED];
       }
