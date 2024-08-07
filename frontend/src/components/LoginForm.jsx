@@ -48,7 +48,7 @@ const LoginForm = () => {
         <input className= "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
       </div>
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all"
               type="submit">Iniciar sesión
       </button>
     </form>

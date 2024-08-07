@@ -49,7 +49,7 @@ export const SideNav = () => {
           {userData.nombre} {userData.apellido}
         </div>
         <div className="text-blue-200 text-sm md:text-sm font-bold">
-          <FontAwesomeIcon icon={userData.user_type === USER_TYPES.STUDENT ? faGraduationCap : userData.user_type === USER_TYPES.ADMINISTATOR ? faScrewdriver : faPencil} className="me-2 group-hover/navUser:animate-spin" />
+          <FontAwesomeIcon icon={userData.user_type === USER_TYPES.STUDENT ? faGraduationCap : userData.user_type === USER_TYPES.ADMINISTATOR ? faScrewdriver : faPencil} className={`me-2 ${userData.user_type === USER_TYPES.STUDENT ? "animate-bounce" : userData.user_type === USER_TYPES.ADMINISTATOR ? "animate-spin-slow" : "animate-bounce"}`} />
           {userData.user_type === USER_TYPES.STUDENT ? "Estudiante" : userData.user_type === USER_TYPES.ADMINISTATOR ? "Administrador" : "Profesor"}
         </div>
       </a>
