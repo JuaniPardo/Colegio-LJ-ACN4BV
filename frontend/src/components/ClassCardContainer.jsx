@@ -1,6 +1,4 @@
 import { ClassCard } from "./ClassCard";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
 const getClassesCards = () => {
   return (
@@ -13,7 +11,7 @@ const getClassesCards = () => {
       <ClassCard />
       <ClassCard />
     </div>
-  );
+  )
   // ) : (
   //   <div className="flex flex-col justify-center py-20 items-center md:h-5/6 w-full">
   //     <FontAwesomeIcon icon={faBookmark} className="opacity-25 text-6xl" />

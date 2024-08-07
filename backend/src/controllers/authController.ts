@@ -4,7 +4,7 @@ import "dotenv/config";
 import { RegisterCredentials, UpdateCredentials, USER_TYPES_MAP, UserEmailNotAvailableError, UserIsNotActiveError, UsernameNotAvailableError, UserNotFoundError, UserRepository, UserTypeError } from "../repositories/UserRepository";
 import { MissingJWTSecretError } from "../config/errors/configErrors";
 
-export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+export const getAllUsers = async (req: Request, res: Response) => {
   // extract user from request
   const user = req.session?.user;
   // validate user is authenticated
@@ -19,7 +19,7 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
   }
 }
 
-export const getUserTypes = async (req: Request, res: Response, next: NextFunction) => {
+export const getUserTypes = async (req: Request, res: Response) => {
   // extract user from request
   const user = req.session?.user;
   // validate user is authenticated
@@ -29,7 +29,7 @@ export const getUserTypes = async (req: Request, res: Response, next: NextFuncti
   return res.status(200).json({ success: true, data: UserRepository.getUserTypes() });
 };
 
-export const getUserBasicInfo = async (req: Request, res: Response, next: NextFunction) => {
+export const getUserBasicInfo = async (req: Request, res: Response) => {
   // extract user from request
   const user = req.session?.user;
   // validate user is authenticated
@@ -44,7 +44,7 @@ export const getUserBasicInfo = async (req: Request, res: Response, next: NextFu
   }
 };
 
-export const getUserData = async (req: Request, res: Response, next: NextFunction) => {
+export const getUserData = async (req: Request, res: Response) => {
   // validate params
   const { id } = req.params
   if (!id) return res.status(400).json({ success: false, message: "id is required." })
@@ -63,7 +63,7 @@ export const getUserData = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export const login = async (req: Request, res: Response, next: NextFunction) => {
+export const login = async (req: Request, res: Response) => {
   // 1. Get username and password request parameters
   const { username, password } = req.body;
   // 2. Validate username and password exists
@@ -97,7 +97,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-export const create = async (req: Request, res: Response, next: NextFunction) => {
+export const create = async (req: Request, res: Response) => {
   // 1. Get data in request body
   const { username, password, user_type, confirmPassword, nombre, apellido, email }: RegisterCredentials = req.body;
   // 2. Validate data
@@ -148,7 +148,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-export const update = async (req: Request, res: Response, next: NextFunction) => {
+export const update = async (req: Request, res: Response) => {
   // extract user from request
   const user = req.session?.user;
   // validate user is authenticated
@@ -194,13 +194,13 @@ export const update = async (req: Request, res: Response, next: NextFunction) =>
       });
     }
   }
-};
+};;;;;
 
-export const logout = (req: Request, res: Response, next: NextFunction) => {
+export const logout = (req: Request, res: Response) => {
   return res.status(200).clearCookie("access_token").clearCookie("refresh_token").json({ success: true, message: "logged out successfully." });
 };
 
-export const refresh = (req: Request, res: Response, next: NextFunction) => {
+export const refresh = (req: Request, res: Response) => {
   const refreshToken = req.cookies.refresh_token;
   if (!refreshToken) return res.status(400).json({ success: false, message: "refresh_token is required to refresh tokens." });
 
