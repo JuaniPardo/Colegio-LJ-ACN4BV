@@ -33,7 +33,6 @@ export class ProfessorAlreadyInCourse extends Error {
   }
 }
 
-
 export class StudentNotFoundInCourse extends Error {
   constructor(message: string) {
     super();

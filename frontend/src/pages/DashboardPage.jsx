@@ -20,6 +20,12 @@ export const DashboardPage = () => {
             <ModuleCardNotas />
           </>
         )}
+        {userData.user_type === USER_TYPES.PROFESSOR && 
+        (
+          <>
+            <ModuleCardClases />
+          </>
+        )}
       </div>
     </>
   );

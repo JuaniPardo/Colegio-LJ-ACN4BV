@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { ClassCardContainer } from "../components/ClassCardContainer";
 import { UsuariosPage } from "../pages/UsuariosPage";
 import { EditUsuarioPage } from "../pages/EditUsuarioPage";
 import { CrearUsuarioPage } from "../pages/CrearUsuarioPage";
@@ -12,6 +11,7 @@ import { ProfessorRoutes } from "../middleware/ProfessorRoutes";
 import { StudentRoutes } from "../middleware/StudentRoutes";
 import { DashboardPage } from "../pages/DashboardPage";
 import { SideNav } from "./Sidenav/sidenav";
+import { MisClasesPage } from "../pages/MisClasesPage";
 
 export const Layout = () => {
   return (
@@ -34,7 +34,7 @@ export const Layout = () => {
 
             {/* PROFESSOR AND STUDENT ROUTES */}
             <Route element={<ProfessorAndStudentRoutes />}>
-              <Route path="clases" element={<ClassCardContainer />} />
+              <Route path="clases" element={<MisClasesPage />} />
               <Route path="/materias/:idMateria/*" element={<MateriaPage />} />
             </Route>
 
