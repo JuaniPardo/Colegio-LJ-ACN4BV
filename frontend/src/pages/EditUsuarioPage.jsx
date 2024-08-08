@@ -51,7 +51,7 @@ export const EditUsuarioPage = () => {
     };
     const getUserTypes = async () => {
       try {
-        const userTypesData = await fetch("http://localhost:3000/api/users/types", {
+        const userTypesData = await fetch(`${API_URL}/api/users/types`, {
           method: "GET",
           credentials: "include",
         });
@@ -81,8 +81,8 @@ export const EditUsuarioPage = () => {
 
   const updateUser = async (formObject) => {
     try {
-      const loginData = await fetch("http://localhost:3000/api/users/update", {
-        method: "POST",
+      const loginData = await fetch(`${API_URL}/api/users/${usuarioForm.id}`, {
+        method: "PUT",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -114,13 +114,13 @@ export const EditUsuarioPage = () => {
     if (createResult) {
       toast.success(`${usuarioForm.username} ha sido actualizado exitosamente.`, {
         id: toastId,
-        duration: 1000,
+        duration: 2500,
       });
       navigate("../usuarios");
     } else {
       toast.error(createMessage, {
         id: toastId,
-        duration: 2000,
+        duration: 2500,
       });
     }
   };

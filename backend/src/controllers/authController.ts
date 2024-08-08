@@ -44,6 +44,25 @@ export const getUserBasicInfo = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteUser = async (req: Request, res: Response) => {
+  // extract user from request
+  const user = req.session?.user;
+  // validate user is authenticated
+  if (!user) return res.status(401).json({ success: false, message: "User is not authenticated." });
+  // validate user is admin
+  if (user.user_type !== USER_TYPES_MAP.ADMINISTRATOR) return res.status(403).json({ success: false, message: "You are unauthorized to perform this action." });
+  // validate params
+  const { id } = req.params
+  if (!id) return res.status(400).json({ success: false, message: "id is required." })
+  try {
+    // get user basic info
+    const userData = UserRepository.deleteUser({_id: id})
+    return res.status(200).json({ success: true, data: userData });
+  } catch(error: any) {
+    return res.status(404).json({ success: false, message: error.message})
+  }
+};
+
 export const getUserData = async (req: Request, res: Response) => {
   // validate params
   const { id } = req.params
@@ -151,15 +170,16 @@ export const create = async (req: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
   // extract user from request
   const user = req.session?.user;
+  const id = req.params.id;
   // validate user is authenticated
+  if (!id) return res.status(400).json({ message: `id is required` });
   if (!user) return res.status(401).json({ success: false, message: "User is not authenticated." });
   // validate user is admin
   if (user.user_type !== USER_TYPES_MAP.ADMINISTRATOR) return res.status(403).json({ success: false, message: "You are unauthorized to perform this action." });
   // 1. Get data in request body
-  const { id, user_type, nombre, apellido, is_active }: UpdateCredentials = req.body;
+  const { user_type, nombre, apellido, is_active }: UpdateCredentials = req.body;
   // 2. Validate data
   let missingField: string | null = null;
-  if (!id) missingField = "id is required";
   if (!nombre) missingField = "nombre is required";
   if (!apellido) missingField = "apellido is required";
   if (!user_type) missingField = "user_type is required";
@@ -194,7 +214,7 @@ export const update = async (req: Request, res: Response) => {
       });
     }
   }
-};;;;;
+}
 
 export const logout = (req: Request, res: Response) => {
   return res.status(200).clearCookie("access_token").clearCookie("refresh_token").json({ success: true, message: "logged out successfully." });

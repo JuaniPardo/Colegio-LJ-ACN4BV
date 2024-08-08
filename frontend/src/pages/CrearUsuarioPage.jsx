@@ -3,6 +3,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState} from "react";
 import { toast } from 'sonner';
+import { API_URL } from "../utils/constants";
 
 export const CrearUsuarioPage = () => {
   const navigate = useNavigate()
@@ -27,7 +28,7 @@ export const CrearUsuarioPage = () => {
   useEffect(() => {
     const getUserTypes = async () => {
       try {
-        const userTypesData = await fetch("http://localhost:3000/api/users/types", {
+        const userTypesData = await fetch(`${API_URL}/api/users/types`, {
           method: "GET",
           credentials: "include"
         })
@@ -45,8 +46,8 @@ export const CrearUsuarioPage = () => {
 
   const createUser = async (formObject) => {
     try {
-      const loginData = await fetch("http://localhost:3000/api/users/create", {
-        method: "POST",
+      const loginData = await fetch(`${API_URL}/api/users`, {
+      method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",

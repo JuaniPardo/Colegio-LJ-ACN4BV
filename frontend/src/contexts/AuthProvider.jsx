@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { API_URL } from "../utils/constants";
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children, loadUser }) => {
   useEffect(() => {
     const refreshToken = async () => {
       try {
-        const refreshData = await fetch("http://localhost:3000/api/token/refresh", {
+        const refreshData = await fetch(`${API_URL}/api/token/refresh`, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -50,7 +51,7 @@ export const AuthProvider = ({ children, loadUser }) => {
 
   const getUserData = async () => {
     try {
-      const basicData = await fetch("http://localhost:3000/api/user-info", {
+      const basicData = await fetch(`${API_URL}/api/user-info`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -70,7 +71,7 @@ export const AuthProvider = ({ children, loadUser }) => {
 
   const login = async (username, password) => {
     try {
-      const loginData = await fetch("http://localhost:3000/api/login", {
+      const loginData = await fetch(`${API_URL}/api/login`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -97,7 +98,7 @@ export const AuthProvider = ({ children, loadUser }) => {
   };
 
   const logout = async() => {
-    const logoutData = await fetch("http://localhost:3000/api/logout", {
+    const logoutData = await fetch(`${API_URL}/api/logout`, {
       method: "POST",
       headers: {
         Accept: "application/json",

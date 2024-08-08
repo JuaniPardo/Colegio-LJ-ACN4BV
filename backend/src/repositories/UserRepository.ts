@@ -169,6 +169,13 @@ export class UserRepository {
     }
   }
 
+  static deleteUser({ _id }): UserBasicInfo {
+    const user = User.findOne({ _id });
+    if (!user) throw new Error("User with specified id not found.");
+    User.remove({ _id })
+    return user
+  }
+
   static userData({ _id }): UserData {
     const user = User.findOne({ _id });
     if (!user) throw new Error("User with specified id not found.");
