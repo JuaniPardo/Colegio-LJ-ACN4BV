@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import jwt, { JsonWebTokenError } from "jsonwebtoken";
 import "dotenv/config";
 import { RegisterCredentials, UpdateCredentials, USER_TYPES_MAP, UserEmailNotAvailableError, UserIsNotActiveError, UsernameNotAvailableError, UserNotFoundError, UserRepository, UserTypeError } from "../repositories/UserRepository";

@@ -134,7 +134,7 @@ export class UserRepository {
         return userFiltered
       })
       return usersFiltered
-    } catch (err) {
+    } catch {
       throw new Error("Error fetching users from db")
     }
   }
