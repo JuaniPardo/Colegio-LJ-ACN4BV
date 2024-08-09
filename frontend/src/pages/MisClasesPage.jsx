@@ -28,7 +28,7 @@ export const MisClasesPage = () => {
       }
     };
     fetchClases();
-  });
+  }, []);
 
   return (
     <>
