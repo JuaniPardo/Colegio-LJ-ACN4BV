@@ -18,7 +18,12 @@ const links = [
   },
   {
     name: "Usuarios",
-    href: "/dashboard/usuarios",
+    href: "/dashboard/manage/usuarios",
+    user_type: [USER_TYPES.ADMINISTATOR],
+  },
+  {
+    name: "Cursos",
+    href: "/dashboard/manage/cursos",
     user_type: [USER_TYPES.ADMINISTATOR],
   },
 ];

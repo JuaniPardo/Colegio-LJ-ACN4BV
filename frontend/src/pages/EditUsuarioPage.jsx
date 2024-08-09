@@ -43,7 +43,7 @@ export const EditUsuarioPage = () => {
           });
         } else {
           toast.error("El usuario que intentas buscar no existe.");
-          navigate(`/dashboard/usuarios`);
+          navigate(`../usuarios`);
         }
       } catch {
         throw new Error("Failed to fetch user data");
@@ -71,7 +71,7 @@ export const EditUsuarioPage = () => {
         await getUserInfo();
       } catch {
         toast.error("Algo ha salido mal, intenta de nuevo.");
-        navigate(`/dashboard/usuarios`);
+        navigate(`../usuarios`);
       } finally {
         setLoading(false);
       }

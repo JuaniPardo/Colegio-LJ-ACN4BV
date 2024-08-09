@@ -12,6 +12,9 @@ import { StudentRoutes } from "../middleware/StudentRoutes";
 import { DashboardPage } from "../pages/DashboardPage";
 import { SideNav } from "./Sidenav/sidenav";
 import { MisClasesPage } from "../pages/MisClasesPage";
+import { CursosPage } from "../pages/CursosPage";
+import { CrearCursosPage } from "../pages/CrearCursosPage";
+import { EditCursoPage } from "../pages/cursos/EditCursoPage";
 
 export const Layout = () => {
   return (
@@ -27,9 +30,14 @@ export const Layout = () => {
 
             {/* ADMIN ROUTES */}
             <Route element={<AdminRoutes />}>
-              <Route path="/usuarios" element={<UsuariosPage />} />
-              <Route path="/usuarios/:idUsuario" element={<EditUsuarioPage />} />
-              <Route path="/usuarios/crear" element={<CrearUsuarioPage />} />
+              <Route path="/manage">
+                <Route path="usuarios" element={<UsuariosPage />} />
+                <Route path="usuarios/:idUsuario" element={<EditUsuarioPage />} />
+                <Route path="usuarios/crear" element={<CrearUsuarioPage />} />
+                <Route path="cursos" element={<CursosPage />} />
+                <Route path="cursos/:idCurso" element={<EditCursoPage />} />
+                <Route path="cursos/crear" element={<CrearCursosPage />} />
+              </Route>
             </Route>
 
             {/* PROFESSOR AND STUDENT ROUTES */}
