@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import { faBookmark } from '@fortawesome/free-regular-svg-icons'
 
 const getClassesCards = () => {
-    return (false) ? 
+    return (true) ? 
     <div className="flex flex-wrap">
         <ClassCard />
         <ClassCard />
